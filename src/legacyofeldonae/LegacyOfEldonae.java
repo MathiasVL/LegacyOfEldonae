@@ -19,7 +19,6 @@ public class LegacyOfEldonae {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        JOptionPane.showMessageDialog(null, "Test", "Test Git",JOptionPane.INFORMATION_MESSAGE);
     }
     
 }
