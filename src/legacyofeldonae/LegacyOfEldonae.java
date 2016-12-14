@@ -5,6 +5,9 @@
  */
 package legacyofeldonae;
 
+import com.sun.corba.se.impl.protocol.giopmsgheaders.MessageBase;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Home
@@ -16,6 +19,7 @@ public class LegacyOfEldonae {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        JOptionPane.showMessageDialog(null, "Test", "Test Git",JOptionPane.INFORMATION_MESSAGE);
     }
     
 }
