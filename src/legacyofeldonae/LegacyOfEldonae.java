@@ -5,7 +5,6 @@
  */
 package legacyofeldonae;
 
-import com.sun.corba.se.impl.protocol.giopmsgheaders.MessageBase;
 import javax.swing.JOptionPane;
 
 /**
