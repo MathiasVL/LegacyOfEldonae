@@ -9,33 +9,28 @@ package domain.Map;
  *
  * @author mathi
  */
-public class Map {
+public class Overview {
     
-    private final int Height = 99;
-    private final int Width = 99;
-    
-    private final int[][] Map = new int[Width][Height];
+    private final int Height = 9;
+    private final int Width = 9;
+        
+    private final int[][] Overview = new int[Width][Height];
 
-    public Map() 
+    public Overview() 
     {
-        GenerateMap();
+        GenerateOverview();
     }  
     
-    public int[][] getMap() 
-    {
-        return Map;
-    }
-        
-    private int[][] GenerateMap()
+    private int[][] GenerateOverview()
     {
         for(int i=0; i< Width; i++)
         {
             for(int j=0; j<Height; j++)
             {
-                Map[i][j] = 0;                
+                Overview[i][j] = 0;                
             }
         }
         
-        return Map;
+        return Overview;
     }
 }
