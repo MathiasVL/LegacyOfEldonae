@@ -17,7 +17,8 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class LegacyOfEldonae {
 
-    public LegacyOfEldonae() {
+    public LegacyOfEldonae() 
+    {
         BeginSession();
         
         try {
@@ -34,8 +35,8 @@ public class LegacyOfEldonae {
         glOrtho(0,WIDTH, HEIGHT, 0, 1, -1);
         glMatrixMode(GL_MODELVIEW);
         
-        while(!Display.isCloseRequested()) {
-            
+        while(!Display.isCloseRequested()) 
+        {            
             DrawQuad(50, 50, 100, 100);
             DrawQuad(150, 150, 100, 100);
             
