@@ -6,10 +6,12 @@
 package legacyofeldonae;
 
 import static domain.Map.Artist.*;
-import org.lwjgl.LWJGLException;
+import domain.Map.Map;
+import domain.Map.Tile;
+import domain.Map.TileType;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import static org.lwjgl.opengl.GL11.*;
+import org.newdawn.slick.opengl.Texture;
+import sun.java2d.loops.DrawRect;
 
 /**
  *
@@ -18,27 +20,32 @@ import static org.lwjgl.opengl.GL11.*;
 public class LegacyOfEldonae {
 
     public LegacyOfEldonae() 
-    {
+    {        
         BeginSession();
         
-        try {
-            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-            Display.create();
-        }
-        catch (LWJGLException e)
-        {
-            e.printStackTrace();
-        }
+        int[][] MapGrid = {
+            {0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,2,2,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0},
+            {0,0,2,2,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0},
+            {0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        };
         
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0,WIDTH, HEIGHT, 0, 1, -1);
-        glMatrixMode(GL_MODELVIEW);
+        Map Map = new Map(MapGrid);
         
         while(!Display.isCloseRequested()) 
         {            
-            DrawQuad(50, 50, 100, 100);
-            DrawQuad(150, 150, 100, 100);
+            Map.Draw();
             
             Display.update();
             Display.sync(60);

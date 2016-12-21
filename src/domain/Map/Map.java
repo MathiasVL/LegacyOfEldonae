@@ -10,32 +10,52 @@ package domain.Map;
  * @author mathi
  */
 public class Map {
-    
-    private final int Height = 99;
-    private final int Width = 99;
-    
-    private final int[][] Map = new int[Width][Height];
+      
+    private Tile[][] Map;
 
     public Map() 
     {
-        GenerateMap();
-    }  
-    
-    public int[][] getMap() 
-    {
-        return Map;
-    }
-        
-    private int[][] GenerateMap()
-    {
-        for(int i=0; i< Width; i++)
+        Map = new Tile[20][15];
+        for(int i = 0; i<Map.length; i++)
         {
-            for(int j=0; j<Height; j++)
+            for(int j = 0; j<Map[i].length; j++)
             {
-                Map[i][j] = 0;                
+                Map[i][j] = new Tile(i*64, j*64, 64, 64, TileType.Grass);
             }
         }
-        
-        return Map;
+    }  
+    
+    public Map(int[][] NewMap) 
+    {
+        Map = new Tile[20][15];
+        for(int i = 0; i<Map.length; i++)
+        {
+            for(int j = 0; j<Map[i].length; j++)
+            {
+                switch(NewMap[j][i])
+                {
+                    case 0 : Map[i][j] = new Tile(i*64, j*64, 64, 64, TileType.Grass);
+                             break;
+                             
+                    case 1 : Map[i][j] = new Tile(i*64, j*64, 64, 64, TileType.Dirt);
+                             break;
+                             
+                    case 2 : Map[i][j] = new Tile(i*64, j*64, 64, 64, TileType.Water);
+                             break;
+                }                
+            }
+        }
+    } 
+    
+    public void Draw()            
+    {
+        for(int i = 0; i < Map.length; i++)
+        {
+            for(int j = 0; j < Map[i].length; j++)
+            {
+                Tile t = Map[i][j];
+                t.Draw();
+            }
+        }
     }
 }
