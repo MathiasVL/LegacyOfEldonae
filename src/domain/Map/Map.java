@@ -47,6 +47,16 @@ public class Map {
         }
     } 
     
+    public void setTile(int xCoord, int yCoord, TileType Type)
+    {
+        Map[xCoord][yCoord] = new Tile(xCoord*64, yCoord*64, 64, 64, Type);        
+    }
+    
+    public Tile GetTile(int xCoord, int yCoord)
+    {
+        return Map[xCoord][yCoord];
+    }
+    
     public void Draw()            
     {
         for(int i = 0; i < Map.length; i++)

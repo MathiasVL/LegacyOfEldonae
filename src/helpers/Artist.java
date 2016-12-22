@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain.Map;
+package helpers;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +40,8 @@ public class Artist {
         glOrtho(0, WIDTH, HEIGHT, 0, 1, -1);
         glMatrixMode(GL_MODELVIEW);
         glEnable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     }
     
     public static void DrawQuad(float x, float y, float Width, float Height)

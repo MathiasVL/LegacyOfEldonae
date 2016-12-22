@@ -5,7 +5,7 @@
  */
 package domain.Map;
 
-import static domain.Map.Artist.*;
+import static helpers.Artist.*;
 import org.newdawn.slick.opengl.Texture;
 
 /**
