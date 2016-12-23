@@ -13,6 +13,7 @@ import org.newdawn.slick.opengl.Texture;
  * @author mathi
  */
 public class Tile {
+    
     private float x, y, Width, Height;
     private Texture Texture;
     private TileType Type;
@@ -34,9 +35,17 @@ public class Tile {
     public float getX() {
         return x;
     }
+    
+    public int getXPlace() {
+        return (int) x / 64;
+    }
 
     public float getY() {
         return y;
+    }
+    
+    public int getYPlace() {
+        return (int) y / 64;
     }
 
     public float getWidth() {

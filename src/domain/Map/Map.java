@@ -52,9 +52,9 @@ public class Map {
         Map[xCoord][yCoord] = new Tile(xCoord*64, yCoord*64, 64, 64, Type);        
     }
     
-    public Tile GetTile(int xCoord, int yCoord)
+    public Tile GetTile(int xPlace, int yPlace)
     {
-        return Map[xCoord][yCoord];
+        return Map[xPlace][yPlace];
     }
     
     public void Draw()            
@@ -63,8 +63,7 @@ public class Map {
         {
             for(int j = 0; j < Map[i].length; j++)
             {
-                Tile t = Map[i][j];
-                t.Draw();
+                Map[i][j].Draw();
             }
         }
     }

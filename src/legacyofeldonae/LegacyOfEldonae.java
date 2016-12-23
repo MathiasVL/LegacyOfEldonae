@@ -10,12 +10,9 @@ import domain.Characters.Player;
 import domain.Characters.Wave;
 import static helpers.Artist.*;
 import domain.Map.Map;
-import domain.Map.Tile;
-import domain.Map.TileType;
 import helpers.Clock;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.opengl.Texture;
-import sun.java2d.loops.DrawRect;
+
 
 /**
  *
@@ -37,7 +34,7 @@ public class LegacyOfEldonae {
             {0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -47,7 +44,7 @@ public class LegacyOfEldonae {
         
         Map Map = new Map(MapGrid);
         Map.setTile(3, 4, Map.GetTile(5, 7).getType());
-        Enemy Enemy = new Enemy(QuickLoad("ufo64"), Map.GetTile(10, 10), 64, 64, 6);
+        Enemy Enemy = new Enemy(QuickLoad("ufo64"), Map.GetTile(10, 10),Map, 64, 64, 6);
         Wave Wave = new Wave(20,Enemy);
         Player Player = new Player(Map);
         
