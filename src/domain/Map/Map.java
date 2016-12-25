@@ -53,7 +53,7 @@ public class Map {
     }
     
     public Tile GetTile(int xPlace, int yPlace)
-    {
+    {        
         return Map[xPlace][yPlace];
     }
     

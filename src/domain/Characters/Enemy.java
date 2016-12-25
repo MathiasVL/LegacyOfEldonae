@@ -60,8 +60,8 @@ public class Enemy {
             {
                 CurrentCheckpoint++;
             }else {
-                x += Delta() * Checkpoints.get(CurrentCheckpoint).getxDirection();
-                y += Delta() * Checkpoints.get(CurrentCheckpoint).getyDirection();
+                x += Delta() * Checkpoints.get(CurrentCheckpoint).getxDirection() * Speed;
+                y += Delta() * Checkpoints.get(CurrentCheckpoint).getyDirection() * Speed;
             }
         }           
     }
@@ -117,14 +117,14 @@ public class Enemy {
             {
                 found = true;
                 //Move counter back 1 to find tile before new tiletype
-                Counter -=1 ;
+                Counter -= 1 ;
                 next = Map.GetTile(s.getXPlace() + dir[0] * Counter, s.getYPlace()+ dir[1] * Counter);                
             }
             
-            c = new Checkpoint(next, dir[0], dir[1]);
             Counter++;
         }
         
+        c = new Checkpoint(next, dir[0], dir[1]);        
         return c;
     }
     
