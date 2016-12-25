@@ -58,7 +58,10 @@ public class Enemy {
         else {
             if(CheckpointReached())
             {
-                CurrentCheckpoint++;
+                if(CurrentCheckpoint + 1 == Checkpoints.size())
+                    System.out.println("Enemy Reached End of Maze");
+                else
+                    CurrentCheckpoint++;
             }else {
                 x += Delta() * Checkpoints.get(CurrentCheckpoint).getxDirection() * Speed;
                 y += Delta() * Checkpoints.get(CurrentCheckpoint).getyDirection() * Speed;
@@ -113,7 +116,7 @@ public class Enemy {
         
         while(!found)
         {
-            if(s.getType() != Map.GetTile(s.getXPlace() + dir[0] * Counter, s.getYPlace()+ dir[1] * Counter).getType())
+            if(s.getXPlace() + dir[0] * Counter == Map.getTilesWide() || s.getYPlace()+ dir[1] * Counter == Map.getTilesHigh() || s.getType() != Map.GetTile(s.getXPlace() + dir[0] * Counter, s.getYPlace()+ dir[1] * Counter).getType())
             {
                 found = true;
                 //Move counter back 1 to find tile before new tiletype
@@ -136,22 +139,22 @@ public class Enemy {
         Tile r = Map.GetTile(s.getXPlace()+1, s.getYPlace());
         Tile l = Map.GetTile(s.getXPlace()-1, s.getYPlace());
         
-        if(s.getType() == u.getType())
+        if(s.getType() == u.getType() && Directions[1] != 1)
         {
             dir[0] = 0;
             dir[1] = -1;
         }
-        else if(s.getType() == r.getType())
+        else if(s.getType() == r.getType() && Directions[0] != -1)
         {
             dir[0] = 1;
             dir[1] = 0;
         }
-        else if(s.getType() == d.getType())
+        else if(s.getType() == d.getType() && Directions[1] != -1)
         {
             dir[0] = 0;
             dir[1] = 1;
         }
-        else if(s.getType() == l.getType())
+        else if(s.getType() == l.getType() && Directions[0] != 1)
         {
             dir[0] = -1;
             dir[1] = 0;
@@ -159,7 +162,7 @@ public class Enemy {
         else {
             dir[0] = 2;
             dir[1] = 2;
-            System.out.println("NO DIRECTION FOUND");
+            //System.out.println("NO DIRECTION FOUND");
         }
         
         return dir;

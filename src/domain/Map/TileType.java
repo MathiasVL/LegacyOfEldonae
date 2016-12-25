@@ -11,7 +11,7 @@ package domain.Map;
  */
 public enum TileType {
     
-    Grass("grass64", true), Dirt("dirt64", false), Water("water64", false);
+    Grass("grass64", true), Dirt("dirt64", false), Water("water64", false), NULL("water64", false);
     
     String TextureName;
     boolean Buildable;
