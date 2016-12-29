@@ -23,7 +23,7 @@ public class Enemy {
     private float Speed, x, y;
     private Texture Texture;
     private Tile StartTile;
-    private boolean First = true;
+    private boolean First = true, Alive = true;
     private Map Map;
     
     private ArrayList<Checkpoint> Checkpoints;
@@ -59,7 +59,7 @@ public class Enemy {
             if(CheckpointReached())
             {
                 if(CurrentCheckpoint + 1 == Checkpoints.size())
-                    System.out.println("Enemy Reached End of Maze");
+                    Die();
                 else
                     CurrentCheckpoint++;
             }else {
@@ -168,6 +168,11 @@ public class Enemy {
         return dir;
     }
     
+    private void Die()
+    {
+        Alive = false;
+    }
+    
     /*
     public boolean PathContinues() {
         boolean Answer = true;
@@ -263,5 +268,9 @@ public class Enemy {
         return Map;
     }
     
+    public boolean IsAlive()
+    {
+        return Alive;
+    }
     
 }
