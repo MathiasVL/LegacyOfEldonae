@@ -19,22 +19,17 @@ public class Game {
     private Map Map;
     private Player Player;
     private WaveManager WaveManager;
-    
-    //Temp Variables
-    TowerCannon Tower;
-    
+        
     public Game(int[][] Map) {
         this.Map = new Map(Map);
-        this.Player = new Player(this.Map);
         this.WaveManager = new WaveManager(new Enemy(QuickLoad("ufo64"), this.Map.GetTile(14, 8), this.Map, 64, 64, 70), 2, 2);
-        this.Tower = new TowerCannon(QuickLoad("cannonBase"), this.Map.GetTile(14, 7), 10);
+        this.Player = new Player(this.Map, WaveManager);
+        
     }
     
     public void Update() {
         Map.Draw();        
         WaveManager.Update();
         Player.Update();
-        
-        Tower.Update();
     }
 }

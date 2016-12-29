@@ -40,4 +40,8 @@ public class WaveManager {
         WaveNumber++;
         System.out.println("Beginning Wave " + WaveNumber);
     }
+    
+    public Wave getCurrentWave(){
+        return CurrentWave;
+    }
 }

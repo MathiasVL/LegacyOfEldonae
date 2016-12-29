@@ -6,9 +6,11 @@
 package domain.Characters;
 
 import domain.Map.*;
+import domain.Tower.TowerCannon;
 import org.lwjgl.input.Mouse;
 
 import static helpers.Artist.*;
+import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 /**
  *
@@ -19,14 +21,18 @@ public class Player {
     private Map Map;
     private TileType[] Types;
     private int Index;
+    private WaveManager WaveManager;
+    private ArrayList<TowerCannon> TowerList;
     
-    public Player(Map Map) {
+    public Player(Map Map, WaveManager WaveManager) {
         this.Map = Map;
         this.Types = new TileType[3];
         this.Types[0] = TileType.Grass;
         this.Types[1] = TileType.Dirt;
         this.Types[2] = TileType.Water;
         this.Index = 0;
+        this.WaveManager = WaveManager;
+        this.TowerList = new ArrayList<TowerCannon>();
     }
     
     public void SetTile() {
@@ -35,15 +41,26 @@ public class Player {
     }
     
     public void Update() {
+        
+        for(TowerCannon T : TowerList)
+            T.Update();
+        
+        //Handle Mouse Input
         if(Mouse.isButtonDown(0))
         {
             SetTile();
         }
+        
+        //Handle Keyboard Input
         while(Keyboard.next())
         {
             if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState()){
                 MoveIndex();
             }
+            if(Keyboard.getEventKey() == Keyboard.KEY_T && Keyboard.getEventKeyState()) {
+                TowerList.add(new TowerCannon(QuickLoad("cannonBase"), Map.GetTile(18, 9), 10, WaveManager.getCurrentWave().getEnemyList()));
+            }
+                
         }
     }
     

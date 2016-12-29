@@ -5,6 +5,7 @@
  */
 package domain.Tower;
 
+import domain.Characters.Enemy;
 import domain.Map.Tile;
 import static helpers.Artist.*;
 import static helpers.Clock.*;
@@ -17,13 +18,15 @@ import org.newdawn.slick.opengl.Texture;
  */
 public class TowerCannon {
     
-    private float x,y, TimeSinceLastShot, FiringSpeed;
+    private float x,y, TimeSinceLastShot, FiringSpeed, Angle;
     private int Width, Height, Damage;
     private Texture BaseTexture, CannonTexture;
     private Tile StartTile;
     private ArrayList<Projectile> Projectiles;
+    private ArrayList<Enemy> Enemies;
+    private Enemy Target;
     
-    public TowerCannon(Texture BaseTexture, Tile StartTile, int Damage) {
+    public TowerCannon(Texture BaseTexture, Tile StartTile, int Damage, ArrayList<Enemy> Enemies) {
         this.BaseTexture = BaseTexture;
         this.CannonTexture = QuickLoad("cannonGun");
         this.StartTile = StartTile;
@@ -35,6 +38,18 @@ public class TowerCannon {
         this.FiringSpeed = 3;
         this.TimeSinceLastShot = 0;
         this.Projectiles = new ArrayList<>();
+        this.Enemies = Enemies;
+        this.Target = AcquireTarget();
+        this.Angle = CalculateAngle();
+    }
+    
+    private Enemy AcquireTarget() {
+        return  Enemies.get(0);
+    }
+    
+    private float CalculateAngle() {
+        double AngleTemp = Math.atan2(Target.getY() - y, Target.getX() - x);
+        return (float) Math.toDegrees(AngleTemp) - 90;
     }
     
     private void Shoot() {
@@ -50,11 +65,12 @@ public class TowerCannon {
         for(Projectile P: Projectiles)
             P.Update();
         
+        Angle = CalculateAngle();
         Draw();
     }
     
     public void Draw() {
         DrawQuadTex(BaseTexture, x, y, Width, Height);
-        DrawQuadTexRot(CannonTexture, x, y, Width, Height, 45);
+        DrawQuadTexRot(CannonTexture, x, y, Width, Height, Angle);
     }
 }
