@@ -7,10 +7,7 @@ package domain;
 
 import domain.Map.Map;
 import domain.Map.TileType;
-import domain.Tower.TowerCannon;
 import static helpers.Artist.HEIGHT;
-import static helpers.Artist.QuickLoad;
-import helpers.Clock;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
