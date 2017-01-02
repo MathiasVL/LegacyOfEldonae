@@ -53,7 +53,7 @@ public class Clock {
         TotalTime += d;
     }
     
-    public static void ChangeMultiplier(int Change)
+    public static void ChangeMultiplier(float Change)
     {
         if(Multiplier + Change < -1 && Multiplier + Change > 7)
         {            

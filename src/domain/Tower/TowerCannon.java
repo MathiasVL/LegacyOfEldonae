@@ -6,6 +6,7 @@
 package domain.Tower;
 
 import domain.Characters.Enemy;
+import domain.Game;
 import domain.Map.Tile;
 import static helpers.Artist.*;
 import static helpers.Clock.*;
@@ -54,7 +55,7 @@ public class TowerCannon {
     
     private void Shoot() {
         TimeSinceLastShot = 0;
-        Projectiles.add(new Projectile(QuickLoad("bullet"), x + 32, y + 32, 50, 10));
+        Projectiles.add(new Projectile(QuickLoad("bullet"), Target, x + Game.TILE_SIZE/2 - (Game.TILE_SIZE/4) , y + Game.TILE_SIZE/2 - (Game.TILE_SIZE/4), 900, 10));
     }
     
     public void Update() {

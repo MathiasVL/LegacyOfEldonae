@@ -13,6 +13,7 @@ import static helpers.Artist.*;
 import domain.Map.Map;
 import domain.Tower.TowerCannon;
 import helpers.Clock;
+import helpers.StateManager;
 import org.lwjgl.opengl.Display;
 
 
@@ -24,33 +25,16 @@ public class LegacyOfEldonae {
 
     public LegacyOfEldonae() 
     {        
-        BeginSession();
+        BeginSession();             
         
-        int[][] MapGrid = {
-            {0,0,2,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
-            {0,0,2,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
-            {0,0,2,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
-            {0,2,2,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
-            {0,2,2,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0},
-            {0,0,2,2,0,0,0,1,1,0,1,1,1,0,1,0,0,0,0,0},
-            {0,0,2,2,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0},
-            {0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1},
-            {0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1},
-        };
-        
-        Game Game = new Game(MapGrid);
+        //Game Game = new Game(MapGrid);
         while(!Display.isCloseRequested()) 
         {          
             Clock.Update();
             
-            Game.Update();
-                        
+            //Game.Update();
+            StateManager.Update();
+            
             Display.update();
             Display.sync(60);
         }

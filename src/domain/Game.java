@@ -19,6 +19,7 @@ public class Game {
     private Map Map;
     private Player Player;
     private WaveManager WaveManager;
+    public static final int TILE_SIZE = 64;
         
     public Game(int[][] Map) {
         this.Map = new Map(Map);

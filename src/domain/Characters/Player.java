@@ -10,6 +10,7 @@ import domain.Tower.TowerCannon;
 import org.lwjgl.input.Mouse;
 
 import static helpers.Artist.*;
+import helpers.Clock;
 import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 /**
@@ -23,6 +24,7 @@ public class Player {
     private int Index;
     private WaveManager WaveManager;
     private ArrayList<TowerCannon> TowerList;
+    private boolean LeftMouseButtonDown;
     
     public Player(Map Map, WaveManager WaveManager) {
         this.Map = Map;
@@ -33,29 +35,32 @@ public class Player {
         this.Index = 0;
         this.WaveManager = WaveManager;
         this.TowerList = new ArrayList<TowerCannon>();
+        this.LeftMouseButtonDown = false;
     }
-    
-    public void SetTile() {
-        //Map.setTile((int)Math.floor(Mouse.getX() / 64), (int) Math.floor(((HEIGHT - Mouse.getY()-0.5 )) / 64), TileType.Water);
-        Map.setTile((int)Math.floor(Mouse.getX() / 64), (int) Math.floor(((HEIGHT - Mouse.getY() - 1 )) / 64) - 1, Types[Index]);
-    }
-    
+        
     public void Update() {
         
         for(TowerCannon T : TowerList)
             T.Update();
         
         //Handle Mouse Input
-        if(Mouse.isButtonDown(0))
-        {
-            SetTile();
+        if(Mouse.isButtonDown(0) && !LeftMouseButtonDown){            
+            TowerList.add(new TowerCannon(QuickLoad("cannonBase"), Map.GetTile((Mouse.getX() / 64), (((HEIGHT - Mouse.getY() - 1 )) / 64) - 1), 10, WaveManager.getCurrentWave().getEnemyList()));
+            //SetTile();
         }
+        
+        LeftMouseButtonDown = Mouse.isButtonDown(0);
         
         //Handle Keyboard Input
         while(Keyboard.next())
         {
             if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState()){
-                MoveIndex();
+                //MoveIndex();
+                Clock.ChangeMultiplier(0.2f);
+            }
+            if(Keyboard.getEventKey() == Keyboard.KEY_LEFT && Keyboard.getEventKeyState()){
+                //MoveIndex();
+                Clock.ChangeMultiplier(-0.2f);
             }
             if(Keyboard.getEventKey() == Keyboard.KEY_T && Keyboard.getEventKeyState()) {
                 TowerList.add(new TowerCannon(QuickLoad("cannonBase"), Map.GetTile(18, 9), 10, WaveManager.getCurrentWave().getEnemyList()));
