@@ -36,16 +36,18 @@ public class Player {
         this.WaveManager = WaveManager;
         this.TowerList = new ArrayList<TowerCannon>();
         this.LeftMouseButtonDown = false;
-    }
+    }  
         
     public void Update() {
         
-        for(TowerCannon T : TowerList)
+        for(TowerCannon T : TowerList){
             T.Update();
+            T.UpdateEnemyList(WaveManager.getCurrentWave().getEnemyList());
+        }
         
         //Handle Mouse Input
         if(Mouse.isButtonDown(0) && !LeftMouseButtonDown){            
-            TowerList.add(new TowerCannon(QuickLoad("cannonBase"), Map.GetTile((Mouse.getX() / 64), (((HEIGHT - Mouse.getY() - 1 )) / 64) - 1), 10, WaveManager.getCurrentWave().getEnemyList()));
+            TowerList.add(new TowerCannon(QuickLoad("cannonBase"), Map.GetTile((Mouse.getX() / 64), (((HEIGHT - Mouse.getY() - 1 )) / 64) - 1), 10, 1000, WaveManager.getCurrentWave().getEnemyList()));
             //SetTile();
         }
         
@@ -63,7 +65,7 @@ public class Player {
                 Clock.ChangeMultiplier(-0.2f);
             }
             if(Keyboard.getEventKey() == Keyboard.KEY_T && Keyboard.getEventKeyState()) {
-                TowerList.add(new TowerCannon(QuickLoad("cannonBase"), Map.GetTile(18, 9), 10, WaveManager.getCurrentWave().getEnemyList()));
+                TowerList.add(new TowerCannon(QuickLoad("cannonBase"), Map.GetTile(18, 9), 10, 1000, WaveManager.getCurrentWave().getEnemyList()));
             }
                 
         }

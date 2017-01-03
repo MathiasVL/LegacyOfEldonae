@@ -7,7 +7,8 @@ package domain;
 
 import domain.Map.Map;
 import domain.Map.TileType;
-import static helpers.Artist.HEIGHT;
+import static helpers.Artist.*;
+import static helpers.Leveler.*;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -22,7 +23,7 @@ public class Editor {
     private TileType[] Types;
     
     public Editor(){
-        this.Map = new Map();
+        this.Map = LoadMap("MapName");//new Map();
         this.Types = new TileType[3];
         this.Types[0] = TileType.Grass;
         this.Types[1] = TileType.Dirt;
@@ -43,11 +44,9 @@ public class Editor {
         {
             if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState()){
                 MoveIndex();
-                //Clock.ChangeMultiplier(0.2f);
             }
-            if(Keyboard.getEventKey() == Keyboard.KEY_LEFT && Keyboard.getEventKeyState()){
-                MoveIndex();
-                //Clock.ChangeMultiplier(-0.2f);
+            if(Keyboard.getEventKey() == Keyboard.KEY_S && Keyboard.getEventKeyState()){
+                SaveMap("MapTest", Map);
             }                    
         }
     }

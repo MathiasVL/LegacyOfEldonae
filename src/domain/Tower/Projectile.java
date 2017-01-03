@@ -18,17 +18,21 @@ import org.newdawn.slick.opengl.Texture;
 public class Projectile {
     
     private Texture Texture;
-    private float x, y, Speed, xVelocity, yVelocity;
+    private float x, y, Width, Height, Speed, xVelocity, yVelocity;
     private int Damage;
     private Enemy Target;
+    private boolean Alive;
     
-    public Projectile(Texture Texture, Enemy Target, float x, float y, float Speed, int Damage){
+    public Projectile(Texture Texture, Enemy Target, float x, float y, float Width, float Height, float Speed, int Damage){
         this.Texture = Texture;
         this.x = x;
         this.y = y;
+        this.Width = Width;
+        this.Height = Height;
         this.Speed = Speed;
         this.Damage = Damage;
         this.Target = Target;
+        this.Alive = true;
         this.xVelocity = 0f;
         this.yVelocity = 0f;
         CalculateDirection();
@@ -50,9 +54,15 @@ public class Projectile {
     }
     
     public void Update() {
-        x += xVelocity * Speed * Delta();
-        y += yVelocity * Speed * Delta();
-        Draw();
+        if(Alive){
+            x += xVelocity * Speed * Delta();
+            y += yVelocity * Speed * Delta();
+            if(CheckCollision(x, y, Width, Height, Target.getX(), Target.getY(), Target.getWidth(), Target.getHeight())){
+                Target.Damage(Damage);
+                Alive = false;
+            }
+            Draw();
+        }
     }
     
     public void Draw() {

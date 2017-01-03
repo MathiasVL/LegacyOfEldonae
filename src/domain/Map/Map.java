@@ -16,6 +16,8 @@ public class Map {
 
     public Map() 
     {     
+        this.TilesWide = 20;
+        this.TilesHigh = 15;
         Map = new Tile[20][15];
         for(int i = 0; i<Map.length; i++)
         {

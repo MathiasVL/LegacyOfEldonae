@@ -29,7 +29,7 @@ public class Enemy {
     private ArrayList<Checkpoint> Checkpoints;
     private int[] Directions;
     
-    public Enemy(Texture Texture, Tile StartTile, Map Map, int Width, int Height, float Speed)
+    public Enemy(Texture Texture, Tile StartTile, Map Map, int Width, int Height, float Speed, int Health)
     {
         this.Texture=Texture;
         this.StartTile = StartTile;
@@ -38,6 +38,7 @@ public class Enemy {
         this.Width = Width;
         this.Height = Height;
         this.Speed = Speed;
+        this.Health = Health;
         this.Map = Map;
         
         this.Checkpoints = new ArrayList<Checkpoint>();
@@ -166,6 +167,12 @@ public class Enemy {
         }
         
         return dir;
+    }
+    
+    public void Damage(int Amount) {
+        Health -= Amount;
+        if(Health <= 0)
+            Die();
     }
     
     private void Die()

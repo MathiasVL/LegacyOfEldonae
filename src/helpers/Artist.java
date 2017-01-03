@@ -44,6 +44,13 @@ public class Artist {
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     }
     
+    public static boolean CheckCollision(float x1, float y1, float Width1, float Height1, float x2, float y2, float Width2, float Height2){
+        if(x1 + Width1 > x2 && x1 < x2 + Width2 && y1 + Height1 > y2 && y1 < y2 + Height2)
+            return true;
+        else
+            return false;
+    }
+    
     public static void DrawQuad(float x, float y, float Width, float Height)
     {
         glBegin(GL_QUADS);
