@@ -6,7 +6,7 @@
 package domain.Tower;
 
 import domain.Characters.Enemy;
-import domain.Game;
+import domain.Entity;
 import static helpers.Artist.*;
 import static helpers.Clock.*;
 import org.newdawn.slick.opengl.Texture;
@@ -15,15 +15,16 @@ import org.newdawn.slick.opengl.Texture;
  *
  * @author Home
  */
-public class Projectile {
+public class Projectile implements Entity {
     
     private Texture texture;
-    private float x, y, width, height, speed, xVelocity, yVelocity;
+    private float x, y, speed, xVelocity, yVelocity;
+    private int width, height;
     private int damage;
     private Enemy target;
     private boolean alive;
     
-    public Projectile(Texture texture, Enemy target, float x, float y, float width, float height, float speed, int damage){
+    public Projectile(Texture texture, Enemy target, float x, float y, int width, int height, float speed, int damage){
         this.texture = texture;
         this.x = x;
         this.y = y;
@@ -67,5 +68,37 @@ public class Projectile {
     
     public void draw() {
         drawQuadTex(texture, x, y, 32, 32);
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

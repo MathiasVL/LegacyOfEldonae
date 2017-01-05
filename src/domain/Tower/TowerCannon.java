@@ -6,7 +6,6 @@
 package domain.Tower;
 
 import domain.Characters.Enemy;
-import domain.Game;
 import domain.Map.Tile;
 import static helpers.Artist.*;
 import static helpers.Clock.*;

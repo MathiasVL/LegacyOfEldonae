@@ -5,7 +5,10 @@
  */
 package domain.Tower;
 
+import domain.Characters.Enemy;
 import domain.Entity;
+import static helpers.Artist.*;
+import org.newdawn.slick.opengl.Texture;
 
 /**
  *
@@ -14,8 +17,18 @@ import domain.Entity;
 public abstract class Tower implements Entity{
 
     private float x, y;
-    private int width, height;
-        
+    private int width, height, damage;
+    private Enemy target;
+    private Texture texture;  
+    
+    public Tower(Texture texture, float x, float y, int width, int height) {
+        this.texture = texture;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+    
     public float getX() {
         return x;
     }
@@ -49,11 +62,11 @@ public abstract class Tower implements Entity{
     }
 
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     public void draw() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        drawQuadTex(texture, x, y, width, height);
     }
     
 }
