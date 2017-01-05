@@ -18,49 +18,49 @@ import org.lwjgl.input.Mouse;
  */
 public class Editor {
     
-    private Map Map;
-    private int Index;
-    private TileType[] Types;
+    private Map map;
+    private int index;
+    private TileType[] types;
     
     public Editor(){
-        this.Map = LoadMap("MapName");//new Map();
-        this.Types = new TileType[3];
-        this.Types[0] = TileType.Grass;
-        this.Types[1] = TileType.Dirt;
-        this.Types[2] = TileType.Water;
-        this.Index = 0;
+        this.map = loadMap("MapName");//new Map();
+        this.types = new TileType[3];
+        this.types[0] = TileType.Grass;
+        this.types[1] = TileType.Dirt;
+        this.types[2] = TileType.Water;
+        this.index = 0;
     }
     
-    public void Update(){
-        Map.Draw();
+    public void update(){
+        map.draw();
         
         //Handle Mouse Input
         if(Mouse.isButtonDown(0)){            
-            SetTile();
+            setTile();
         }
                 
         //Handle Keyboard Input
         while(Keyboard.next())
         {
             if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState()){
-                MoveIndex();
+                moveIndex();
             }
             if(Keyboard.getEventKey() == Keyboard.KEY_S && Keyboard.getEventKeyState()){
-                SaveMap("MapTest", Map);
+                saveMap("MapTest", map);
             }                    
         }
     }
     
-    private void SetTile() {
-        Map.setTile((int)Math.floor(Mouse.getX() / 64), (int) Math.floor(((HEIGHT - Mouse.getY() - 1 )) / 64) - 1, Types[Index]);
+    private void setTile() {
+        map.setTile((int)Math.floor(Mouse.getX() / TILE_SIZE), (int) Math.floor(((HEIGHT - Mouse.getY() - 1 )) / TILE_SIZE) - 1, types[index]);
     }
         
-    private void MoveIndex()
+    private void moveIndex()
     {
-        Index++;
-        if(Index > Types.length -1)
+        index++;
+        if(index > types.length -1)
         {
-            Index = 0;
+            index = 0;
         }
     }
 }

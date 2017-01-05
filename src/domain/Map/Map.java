@@ -5,92 +5,94 @@
  */
 package domain.Map;
 
+import static helpers.Artist.TILE_SIZE;
+
 /**
  *
  * @author mathi
  */
 public class Map {
       
-    private Tile[][] Map;
-    private int TilesWide, TilesHigh;    
+    private Tile[][] map;
+    private int tilesWide, tilesHigh;    
 
     public Map() 
     {     
-        this.TilesWide = 20;
-        this.TilesHigh = 15;
-        Map = new Tile[20][15];
-        for(int i = 0; i<Map.length; i++)
+        this.tilesWide = 20;
+        this.tilesHigh = 15;
+        map = new Tile[20][15];
+        for(int i = 0; i<map.length; i++)
         {
-            for(int j = 0; j<Map[i].length; j++)
+            for(int j = 0; j<map[i].length; j++)
             {
-                Map[i][j] = new Tile(i*64, j*64, 64, 64, TileType.Grass);
+                map[i][j] = new Tile(i*TILE_SIZE, j*TILE_SIZE, TILE_SIZE, TILE_SIZE, TileType.Grass);
             }
         }
     }  
     
-    public Map(int[][] NewMap) 
+    public Map(int[][] newMap) 
     {
-        this.TilesWide = NewMap[0].length;
-        this.TilesHigh = NewMap.length;
+        this.tilesWide = newMap[0].length;
+        this.tilesHigh = newMap.length;
    
-        Map = new Tile[TilesWide][TilesHigh];
-        for(int i = 0; i<Map.length; i++)
+        map = new Tile[tilesWide][tilesHigh];
+        for(int i = 0; i<map.length; i++)
         {
-            for(int j = 0; j<Map[i].length; j++)
+            for(int j = 0; j<map[i].length; j++)
             {
-                switch(NewMap[j][i])
+                switch(newMap[j][i])
                 {
-                    case 0 : Map[i][j] = new Tile(i*64, j*64, 64, 64, TileType.Grass);
+                    case 0 : map[i][j] = new Tile(i*TILE_SIZE, j*TILE_SIZE, TILE_SIZE, TILE_SIZE, TileType.Grass);
                              break;
                              
-                    case 1 : Map[i][j] = new Tile(i*64, j*64, 64, 64, TileType.Dirt);
+                    case 1 : map[i][j] = new Tile(i*TILE_SIZE, j*TILE_SIZE, TILE_SIZE, TILE_SIZE, TileType.Dirt);
                              break;
                              
-                    case 2 : Map[i][j] = new Tile(i*64, j*64, 64, 64, TileType.Water);
+                    case 2 : map[i][j] = new Tile(i*TILE_SIZE, j*TILE_SIZE, TILE_SIZE, TILE_SIZE, TileType.Water);
                              break;
                 }                
             }
         }
     } 
     
-    public void setTile(int xCoord, int yCoord, TileType Type)
+    public void setTile(int xCoord, int yCoord, TileType type)
     {
-        Map[xCoord][yCoord] = new Tile(xCoord*64, yCoord*64, 64, 64, Type);        
+        map[xCoord][yCoord] = new Tile(xCoord*TILE_SIZE, yCoord*TILE_SIZE, TILE_SIZE, TILE_SIZE, type);        
     }
     
-    public Tile GetTile(int xPlace, int yPlace)
+    public Tile getTile(int xPlace, int yPlace)
     {        
-        if(xPlace < TilesWide && yPlace < TilesHigh && xPlace > -1 && yPlace > -1)
-            return Map[xPlace][yPlace];
+        if(xPlace < tilesWide && yPlace < tilesHigh && xPlace > -1 && yPlace > -1)
+            return map[xPlace][yPlace];
         else
             return new Tile(0,0,0,0,TileType.NULL);
     }
     
-    public void Draw()            
+    public void draw()            
     {
-        for(int i = 0; i < Map.length; i++)
+        for(int i = 0; i < map.length; i++)
         {
-            for(int j = 0; j < Map[i].length; j++)
+            for(int j = 0; j < map[i].length; j++)
             {
-                Map[i][j].Draw();
+                map[i][j].draw();
             }
         }
     }
 
     public int getTilesWide() {
-        return TilesWide;
+        return tilesWide;
     }
 
-    public void setTilesWide(int TilesWide) {
-        this.TilesWide = TilesWide;
+    public void setTilesWide(int tilesWide) {
+        this.tilesWide = tilesWide;
     }
 
     public int getTilesHigh() {
-        return TilesHigh;
+        return tilesHigh;
     }
 
-    public void setTilesHigh(int TilesHigh) {
-        this.TilesHigh = TilesHigh;
+    public void setTilesHigh(int tilesHigh) {
+        this.tilesHigh = tilesHigh;
     }
     
     

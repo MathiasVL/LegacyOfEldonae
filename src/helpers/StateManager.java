@@ -19,12 +19,12 @@ public class StateManager {
         MAINMENU, GAME, EDITOR
     }
     
-    public static GameStates GameState = GameStates.MAINMENU;
-    public static MainMenu MainMenu;
-    public static Game Game;
-    public static Editor Editor;
+    public static GameStates gameState = GameStates.MAINMENU;
+    public static MainMenu mainMenu;
+    public static Game game;
+    public static Editor editor;
     
-    static int[][] MapGrid = {
+    static int[][] mapGrid = {
             {0,0,2,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
             {0,0,2,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
             {0,0,2,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
@@ -42,28 +42,28 @@ public class StateManager {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1},
         };
     
-    public static void Update() {
-        switch(GameState){
+    public static void update() {
+        switch(gameState){
             case MAINMENU:
-                if(MainMenu == null)
-                    MainMenu = new MainMenu();
-                MainMenu.Update();
+                if(mainMenu == null)
+                    mainMenu = new MainMenu();
+                mainMenu.update();
                 break;
             case GAME:
-                if(Game == null)
-                    Game = new Game(MapGrid);
-                Game.Update();
+                if(game == null)
+                    game = new Game(mapGrid);
+                game.update();
                 break;
             case EDITOR:
-                if(Editor == null)
-                    Editor = new Editor();
-                Editor.Update();
+                if(editor == null)
+                    editor = new Editor();
+                editor.update();
                 break;
         }
     }
     
-    public static void setState(GameStates NewState) {
-        GameState = NewState;
+    public static void setState(GameStates newState) {
+        gameState = newState;
     }
     
 }

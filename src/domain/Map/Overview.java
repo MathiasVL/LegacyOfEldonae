@@ -11,26 +11,26 @@ package domain.Map;
  */
 public class Overview {
     
-    private final int Height = 9;
-    private final int Width = 9;
+    private final int height = 9;
+    private final int width = 9;
         
-    private final int[][] Overview = new int[Width][Height];
+    private final int[][] overview = new int[width][height];
 
     public Overview() 
     {
-        GenerateOverview();
+        generateOverview();
     }  
     
-    private int[][] GenerateOverview()
+    private int[][] generateOverview()
     {
-        for(int i=0; i< Width; i++)
+        for(int i=0; i< width; i++)
         {
-            for(int j=0; j<Height; j++)
+            for(int j=0; j<height; j++)
             {
-                Overview[i][j] = 0;                
+                overview[i][j] = 0;                
             }
         }
         
-        return Overview;
+        return overview;
     }
 }

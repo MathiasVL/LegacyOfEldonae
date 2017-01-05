@@ -7,7 +7,6 @@ package domain;
 
 import domain.Characters.*;
 import domain.Map.*;
-import domain.Tower.TowerCannon;
 import static helpers.Artist.*;
 
 /**
@@ -16,22 +15,20 @@ import static helpers.Artist.*;
  */
 public class Game {
     
-    private Map Map;
-    private Player Player;
-    private WaveManager WaveManager;
-    public static final int TILE_SIZE = 64;
-    public static final int PROJECTILE_SIZE = 32;
+    private Map map;
+    private Player player;
+    private WaveManager waveManager;
         
-    public Game(int[][] Map) {
-        this.Map = new Map(Map);
-        this.WaveManager = new WaveManager(new Enemy(QuickLoad("ufo64"), this.Map.GetTile(14, 8), this.Map, 64, 64, 70, 25), 2, 2);
-        this.Player = new Player(this.Map, WaveManager);
+    public Game(int[][] map) {
+        this.map = new Map(map);
+        this.waveManager = new WaveManager(new Enemy(quickLoad("ufo64"), this.map.getTile(14, 8), this.map, TILE_SIZE, TILE_SIZE, 70, 25), 2, 2);
+        this.player = new Player(this.map, waveManager);
         
     }
     
-    public void Update() {
-        Map.Draw();        
-        WaveManager.Update();
-        Player.Update();
+    public void update() {
+        map.draw();        
+        waveManager.update();
+        player.update();
     }
 }

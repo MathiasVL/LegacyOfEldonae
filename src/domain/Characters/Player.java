@@ -19,64 +19,64 @@ import org.lwjgl.input.Keyboard;
  */
 public class Player {
     
-    private Map Map;
-    private TileType[] Types;
-    private int Index;
-    private WaveManager WaveManager;
-    private ArrayList<TowerCannon> TowerList;
-    private boolean LeftMouseButtonDown;
+    private Map map;
+    private TileType[] types;
+    private int index;
+    private WaveManager waveManager;
+    private ArrayList<TowerCannon> towerList;
+    private boolean leftMouseButtonDown;
     
-    public Player(Map Map, WaveManager WaveManager) {
-        this.Map = Map;
-        this.Types = new TileType[3];
-        this.Types[0] = TileType.Grass;
-        this.Types[1] = TileType.Dirt;
-        this.Types[2] = TileType.Water;
-        this.Index = 0;
-        this.WaveManager = WaveManager;
-        this.TowerList = new ArrayList<TowerCannon>();
-        this.LeftMouseButtonDown = false;
+    public Player(Map map, WaveManager waveManager) {
+        this.map = map;
+        this.types = new TileType[3];
+        this.types[0] = TileType.Grass;
+        this.types[1] = TileType.Dirt;
+        this.types[2] = TileType.Water;
+        this.index = 0;
+        this.waveManager = waveManager;
+        this.towerList = new ArrayList<TowerCannon>();
+        this.leftMouseButtonDown = false;
     }  
         
-    public void Update() {
+    public void update() {
         
-        for(TowerCannon T : TowerList){
-            T.Update();
-            T.UpdateEnemyList(WaveManager.getCurrentWave().getEnemyList());
+        for(TowerCannon t : towerList){
+            t.update();
+            t.updateEnemyList(waveManager.getCurrentWave().getEnemyList());
         }
         
         //Handle Mouse Input
-        if(Mouse.isButtonDown(0) && !LeftMouseButtonDown){            
-            TowerList.add(new TowerCannon(QuickLoad("cannonBase"), Map.GetTile((Mouse.getX() / 64), (((HEIGHT - Mouse.getY() - 1 )) / 64) - 1), 10, 1000, WaveManager.getCurrentWave().getEnemyList()));
+        if(Mouse.isButtonDown(0) && !leftMouseButtonDown){            
+            towerList.add(new TowerCannon(quickLoad("cannonBase"), map.getTile((Mouse.getX() / TILE_SIZE), (((HEIGHT - Mouse.getY() - 1 )) / TILE_SIZE) - 1), 10, 1000, waveManager.getCurrentWave().getEnemyList()));
             //SetTile();
         }
         
-        LeftMouseButtonDown = Mouse.isButtonDown(0);
+        leftMouseButtonDown = Mouse.isButtonDown(0);
         
         //Handle Keyboard Input
         while(Keyboard.next())
         {
             if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState()){
                 //MoveIndex();
-                Clock.ChangeMultiplier(0.2f);
+                Clock.changeMultiplier(0.2f);
             }
             if(Keyboard.getEventKey() == Keyboard.KEY_LEFT && Keyboard.getEventKeyState()){
                 //MoveIndex();
-                Clock.ChangeMultiplier(-0.2f);
+                Clock.changeMultiplier(-0.2f);
             }
             if(Keyboard.getEventKey() == Keyboard.KEY_T && Keyboard.getEventKeyState()) {
-                TowerList.add(new TowerCannon(QuickLoad("cannonBase"), Map.GetTile(18, 9), 10, 1000, WaveManager.getCurrentWave().getEnemyList()));
+                towerList.add(new TowerCannon(quickLoad("cannonBase"), map.getTile(18, 9), 10, 1000, waveManager.getCurrentWave().getEnemyList()));
             }
                 
         }
     }
     
-    private void MoveIndex()
+    private void moveIndex()
     {
-        Index++;
-        if(Index > Types.length -1)
+        index++;
+        if(index > types.length -1)
         {
-            Index = 0;
+            index = 0;
         }
     }
 }

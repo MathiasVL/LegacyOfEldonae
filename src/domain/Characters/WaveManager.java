@@ -11,37 +11,37 @@ package domain.Characters;
  */
 public class WaveManager {
     
-    private float TimeSinceLastWave, TimeBetweenEnemies;
-    private int WaveNumber, EnemiesPerWave;
-    private Enemy EnemyType;
-    private Wave CurrentWave;
+    private float timeSinceLastWave, timeBetweenEnemies;
+    private int waveNumber, enemiesPerWave;
+    private Enemy enemyType;
+    private Wave currentWave;
     
-    public WaveManager(Enemy EnemyType, float TimeBetweenEnemies, int EnemiesPerWave) {
-        this.EnemyType = EnemyType;
-        this.TimeBetweenEnemies = TimeBetweenEnemies;
-        this.EnemiesPerWave = EnemiesPerWave;
-        this.TimeSinceLastWave = 0;
-        this.WaveNumber = 0;
+    public WaveManager(Enemy enemyType, float timeBetweenEnemies, int enemiesPerWave) {
+        this.enemyType = enemyType;
+        this.timeBetweenEnemies = timeBetweenEnemies;
+        this.enemiesPerWave = enemiesPerWave;
+        this.timeSinceLastWave = 0;
+        this.waveNumber = 0;
         
-        this.CurrentWave = null;
+        this.currentWave = null;
         
-        NewWave();
+        newWave();
     }
     
-    public void Update() {
-        if(!CurrentWave.IsCompleted())
-            CurrentWave.Update();
+    public void update() {
+        if(!currentWave.isCompleted())
+            currentWave.update();
         else
-            NewWave();
+            newWave();
     }
     
-    private void NewWave() {
-        CurrentWave = new Wave(EnemyType, TimeBetweenEnemies, EnemiesPerWave);
-        WaveNumber++;
-        System.out.println("Beginning Wave " + WaveNumber);
+    private void newWave() {
+        currentWave = new Wave(enemyType, timeBetweenEnemies, enemiesPerWave);
+        waveNumber++;
+        System.out.println("Beginning Wave " + waveNumber);
     }
     
     public Wave getCurrentWave(){
-        return CurrentWave;
+        return currentWave;
     }
 }

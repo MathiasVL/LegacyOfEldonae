@@ -5,6 +5,7 @@
  */
 package domain.Characters;
 
+import domain.Entity;
 import domain.Map.Checkpoint;
 import domain.Map.Map;
 import static helpers.Artist.*;
@@ -18,94 +19,94 @@ import org.newdawn.slick.opengl.Texture;
  *
  * @author mathi
  */
-public class Enemy {
-    private int Width, Height, Health, CurrentCheckpoint;
-    private float Speed, x, y;
-    private Texture Texture;
-    private Tile StartTile;
-    private boolean First = true, Alive = true;
-    private Map Map;
+public class Enemy implements Entity {
+    private int width, height, health, currentCheckpoint;
+    private float speed, x, y;
+    private Texture texture;
+    private Tile startTile;
+    private boolean first = true, alive = true;
+    private Map map;
     
-    private ArrayList<Checkpoint> Checkpoints;
-    private int[] Directions;
+    private ArrayList<Checkpoint> checkpoints;
+    private int[] directions;
     
-    public Enemy(Texture Texture, Tile StartTile, Map Map, int Width, int Height, float Speed, int Health)
+    public Enemy(Texture texture, Tile startTile, Map map, int width, int height, float speed, int health)
     {
-        this.Texture=Texture;
-        this.StartTile = StartTile;
-        this.x = StartTile.getX();
-        this.y = StartTile.getY();
-        this.Width = Width;
-        this.Height = Height;
-        this.Speed = Speed;
-        this.Health = Health;
-        this.Map = Map;
+        this.texture = texture;
+        this.startTile = startTile;
+        this.x = startTile.getX();
+        this.y = startTile.getY();
+        this.width = width;
+        this.height = height;
+        this.speed = speed;
+        this.health = health;
+        this.map = map;
         
-        this.Checkpoints = new ArrayList<Checkpoint>();
-        this.Directions = new int[2];
+        this.checkpoints = new ArrayList<Checkpoint>();
+        this.directions = new int[2];
         //X direction
-        this.Directions[0] = 0;
+        this.directions[0] = 0;
         //Y direction
-        this.Directions[1] = 0;
-        Directions = FindNextD(StartTile);        
-        this.CurrentCheckpoint = 0;
-        PopulateCheckPointList();
+        this.directions[1] = 0;
+        directions = findNextD(startTile);        
+        this.currentCheckpoint = 0;
+        populateCheckPointList();
     }
     
-    public void Update()
+    public void update()
     {
-        if(First)
-            First = false;
+        if(first)
+            first = false;
         else {
-            if(CheckpointReached())
+            if(checkpointReached())
             {
-                if(CurrentCheckpoint + 1 == Checkpoints.size())
-                    Die();
+                if(currentCheckpoint + 1 == checkpoints.size())
+                    die();
                 else
-                    CurrentCheckpoint++;
+                    currentCheckpoint++;
             }else {
-                x += Delta() * Checkpoints.get(CurrentCheckpoint).getxDirection() * Speed;
-                y += Delta() * Checkpoints.get(CurrentCheckpoint).getyDirection() * Speed;
+                x += delta() * checkpoints.get(currentCheckpoint).getxDirection() * speed;
+                y += delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed;
             }
         }           
     }
     
-    private boolean CheckpointReached() {
-        boolean Reached = false;
-        Tile T = Checkpoints.get(CurrentCheckpoint).getTile();
+    private boolean checkpointReached() {
+        boolean reached = false;
+        Tile t = checkpoints.get(currentCheckpoint).getTile();
         //Check if position reached tile whithin variance of 3 (arbitrary)
-        if(x > T.getX() - 3 && x < T.getX() + 3 && y > T.getY() -3 && y < T.getY() + 3)
+        if(x > t.getX() - 3 && x < t.getX() + 3 && y > t.getY() -3 && y < t.getY() + 3)
         {
-            Reached = true;
-            x = T.getX();
-            y = T.getY();
+            reached = true;
+            x = t.getX();
+            y = t.getY();
         }
         
-        return Reached;
+        return reached;
     }
     
-    private void PopulateCheckPointList() {
-        Checkpoints.add(FindNextC(StartTile, Directions = FindNextD(StartTile)));
+    private void populateCheckPointList() {
+        checkpoints.add(findNextC(startTile, directions = findNextD(startTile)));
         
-        int Counter = 0;
-        boolean Cont = true;
+        int counter = 0;
+        boolean cont = true;
         
-        while(Cont)
+        while(cont)
         {
-            int[] CurrentD = FindNextD(Checkpoints.get(Counter).getTile());
+            int[] currentD = findNextD(checkpoints.get(counter).getTile());
             //Check if a next direction/checkpoint exists, end after 20 checkpoints (arbitrary)
-            if(CurrentD[0] == 2 || Counter == 20){
-                Cont = false;
+            if(currentD[0] == 2 || counter == 20){
+                cont = false;
             }
             else
             {
-                Checkpoints.add(FindNextC(Checkpoints.get(Counter).getTile(), Directions = FindNextD(Checkpoints.get(Counter).getTile())));
+                checkpoints.add(findNextC(checkpoints.get(counter).getTile(), directions = findNextD(checkpoints.get(counter).getTile())));
             }
-            Counter++;
+            counter++;
         }                
     }
     
-    private Checkpoint FindNextC(Tile s, int[] dir) {
+    private Checkpoint findNextC(Tile s, int[] dir) {
         Tile next = null;
         Checkpoint c = null;
         
@@ -113,49 +114,49 @@ public class Enemy {
         boolean found = false;
         
         //Integer to increment each loop
-        int Counter = 1;
+        int counter = 1;
         
         while(!found)
         {
-            if(s.getXPlace() + dir[0] * Counter == Map.getTilesWide() || s.getYPlace()+ dir[1] * Counter == Map.getTilesHigh() || s.getType() != Map.GetTile(s.getXPlace() + dir[0] * Counter, s.getYPlace()+ dir[1] * Counter).getType())
+            if(s.getXPlace() + dir[0] * counter == map.getTilesWide() || s.getYPlace()+ dir[1] * counter == map.getTilesHigh() || s.getType() != map.getTile(s.getXPlace() + dir[0] * counter, s.getYPlace()+ dir[1] * counter).getType())
             {
                 found = true;
                 //Move counter back 1 to find tile before new tiletype
-                Counter -= 1 ;
-                next = Map.GetTile(s.getXPlace() + dir[0] * Counter, s.getYPlace()+ dir[1] * Counter);                
+                counter -= 1 ;
+                next = map.getTile(s.getXPlace() + dir[0] * counter, s.getYPlace()+ dir[1] * counter);                
             }
             
-            Counter++;
+            counter++;
         }
         
         c = new Checkpoint(next, dir[0], dir[1]);        
         return c;
     }
     
-    private int[] FindNextD(Tile s) {
+    private int[] findNextD(Tile s) {
         int[] dir = new int[2];
         
-        Tile u = Map.GetTile(s.getXPlace(), s.getYPlace()-1);
-        Tile d = Map.GetTile(s.getXPlace(), s.getYPlace()+1);
-        Tile r = Map.GetTile(s.getXPlace()+1, s.getYPlace());
-        Tile l = Map.GetTile(s.getXPlace()-1, s.getYPlace());
+        Tile u = map.getTile(s.getXPlace(), s.getYPlace()-1);
+        Tile d = map.getTile(s.getXPlace(), s.getYPlace()+1);
+        Tile r = map.getTile(s.getXPlace()+1, s.getYPlace());
+        Tile l = map.getTile(s.getXPlace()-1, s.getYPlace());
         
-        if(s.getType() == u.getType() && Directions[1] != 1)
+        if(s.getType() == u.getType() && directions[1] != 1)
         {
             dir[0] = 0;
             dir[1] = -1;
         }
-        else if(s.getType() == r.getType() && Directions[0] != -1)
+        else if(s.getType() == r.getType() && directions[0] != -1)
         {
             dir[0] = 1;
             dir[1] = 0;
         }
-        else if(s.getType() == d.getType() && Directions[1] != -1)
+        else if(s.getType() == d.getType() && directions[1] != -1)
         {
             dir[0] = 0;
             dir[1] = 1;
         }
-        else if(s.getType() == l.getType() && Directions[0] != 1)
+        else if(s.getType() == l.getType() && directions[0] != 1)
         {
             dir[0] = -1;
             dir[1] = 0;
@@ -169,15 +170,15 @@ public class Enemy {
         return dir;
     }
     
-    public void Damage(int Amount) {
-        Health -= Amount;
-        if(Health <= 0)
-            Die();
+    public void damage(int Amount) {
+        health -= Amount;
+        if(health <= 0)
+            die();
     }
     
-    private void Die()
+    private void die()
     {
-        Alive = false;
+        alive = false;
     }
     
     /*
@@ -193,25 +194,25 @@ public class Enemy {
         return Answer;
     }
     */
-    public void Draw()
+    public void draw()
     {
-        DrawQuadTex(Texture, x, y, Width, Height);
+        drawQuadTex(texture, x, y, width, height);
     }
 
-    public void setWidth(int Width) {
-        this.Width = Width;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public void setHeight(int Height) {
-        this.Height = Height;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public void setHealth(int Health) {
-        this.Health = Health;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
-    public void setSpeed(float Speed) {
-        this.Speed = Speed;
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 
     public void setX(float x) {
@@ -222,32 +223,32 @@ public class Enemy {
         this.y = y;
     }
 
-    public void setTexture(Texture Texture) {
-        this.Texture = Texture;
+    public void setTexture(Texture texture) {
+        this.texture = texture;
     }
 
-    public void setStartTile(Tile StartTile) {
-        this.StartTile = StartTile;
+    public void setStartTile(Tile startTile) {
+        this.startTile = startTile;
     }
 
-    public void setFirst(boolean First) {
-        this.First = First;
+    public void setFirst(boolean first) {
+        this.first = first;
     }
 
     public int getWidth() {
-        return Width;
+        return width;
     }
 
     public int getHeight() {
-        return Height;
+        return height;
     }
 
     public int getHealth() {
-        return Health;
+        return health;
     }
 
     public float getSpeed() {
-        return Speed;
+        return speed;
     }
 
     public float getX() {
@@ -259,25 +260,25 @@ public class Enemy {
     }
 
     public Texture getTexture() {
-        return Texture;
+        return texture;
     }
 
     public Tile getStartTile() {
-        return StartTile;
+        return startTile;
     }
 
     public boolean isFirst() {
-        return First;
+        return first;
     }
     
     public Map getMap()
     {
-        return Map;
+        return map;
     }
     
-    public boolean IsAlive()
+    public boolean isAlive()
     {
-        return Alive;
+        return alive;
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package domain.Characters;
 
+import static helpers.Artist.TILE_SIZE;
 import java.util.ArrayList;
 import static helpers.Clock.*;
 /**
@@ -13,58 +14,58 @@ import static helpers.Clock.*;
  */
 public class Wave {
     
-    private float TimeSinceLastSpawn, SpawnTime;
-    private Enemy EnemyType;
-    private ArrayList<Enemy> EnemyList;
-    private int EnemiesPerWave;
-    private boolean WaveCompleted;
+    private float timeSinceLastSpawn, spawnTime;
+    private Enemy enemyType;
+    private ArrayList<Enemy> enemyList;
+    private int enemiesPerWave;
+    private boolean waveCompleted;
     
-    public Wave(Enemy EnemyType, float SpawnTime, int EnemiesPerWave)
+    public Wave(Enemy enemyType, float spawnTime, int enemiesPerWave)
     {
-        this.EnemyType = EnemyType;
-        this.SpawnTime = SpawnTime;
-        this.EnemiesPerWave = EnemiesPerWave;
-        this.TimeSinceLastSpawn = 0;
-        this.EnemyList = new ArrayList<Enemy>();
-        this.WaveCompleted = false;
+        this.enemyType = enemyType;
+        this.spawnTime = spawnTime;
+        this.enemiesPerWave = enemiesPerWave;
+        this.timeSinceLastSpawn = 0;
+        this.enemyList = new ArrayList<Enemy>();
+        this.waveCompleted = false;
         
-        Spawn();
+        spawn();
     }
     
-    public void Update()
+    public void update()
     {
-        boolean AllEnemiesDead = true;
-        if(EnemyList.size() < EnemiesPerWave) {
-            TimeSinceLastSpawn += Delta();
-            if(TimeSinceLastSpawn > SpawnTime) {
-                Spawn();
-                TimeSinceLastSpawn = 0;
+        boolean allEnemiesDead = true;
+        if(enemyList.size() < enemiesPerWave) {
+            timeSinceLastSpawn += delta();
+            if(timeSinceLastSpawn > spawnTime) {
+                spawn();
+                timeSinceLastSpawn = 0;
             }
         }
         
-        for(Enemy e : EnemyList)
+        for(Enemy e : enemyList)
         {
-            if(e.IsAlive()){
-                AllEnemiesDead = false;
-                e.Update();
-                e.Draw();
+            if(e.isAlive()){
+                allEnemiesDead = false;
+                e.update();
+                e.draw();
             }
         }
         
-        if(AllEnemiesDead)
-            WaveCompleted = true;
+        if(allEnemiesDead)
+            waveCompleted = true;
     }
     
-    private void Spawn() {
-        EnemyList.add(new Enemy(EnemyType.getTexture(), EnemyType.getStartTile(),EnemyType.getMap(), 64, 64, EnemyType.getSpeed(), EnemyType.getHealth()));
+    private void spawn() {
+        enemyList.add(new Enemy(enemyType.getTexture(), enemyType.getStartTile(), enemyType.getMap(), TILE_SIZE, TILE_SIZE, enemyType.getSpeed(), enemyType.getHealth()));
         
     }
     
-    public boolean IsCompleted() {
-        return WaveCompleted;
+    public boolean isCompleted() {
+        return waveCompleted;
     }
     
     public ArrayList<Enemy> getEnemyList() {
-        return EnemyList;
+        return enemyList;
     }
 }

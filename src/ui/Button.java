@@ -13,42 +13,42 @@ import org.newdawn.slick.opengl.Texture;
  */
 public class Button {
     
-    private String Name;
-    private Texture Texture;
-    private int x, y, Width, Height;
+    private String name;
+    private Texture texture;
+    private int x, y, width, height;
     
-    public Button(String Name, Texture Texture, int x, int y, int Width, int Height) {
-        this.Name = Name;
-        this.Texture = Texture;
+    public Button(String name, Texture texture, int x, int y, int width, int height) {
+        this.name = name;
+        this.texture = texture;
         this.x = x;
         this.y = y;
-        this.Width = Width;
-        this.Height = Height;
+        this.width = width;
+        this.height = height;
     }
     
-    public Button(String Name, Texture Texture, int x, int y) {
-        this.Name = Name;
-        this.Texture = Texture;
+    public Button(String name, Texture texture, int x, int y) {
+        this.name = name;
+        this.texture = texture;
         this.x = x;
         this.y = y;
-        this.Width = Texture.getImageWidth();
-        this.Height = Texture.getImageHeight();
+        this.width = texture.getImageWidth();
+        this.height = texture.getImageHeight();
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Texture getTexture() {
-        return Texture;
+        return texture;
     }
 
-    public void setTexture(Texture Texture) {
-        this.Texture = Texture;
+    public void setTexture(Texture texture) {
+        this.texture = texture;
     }
 
     public int getX() {
@@ -68,19 +68,19 @@ public class Button {
     }
 
     public int getWidth() {
-        return Width;
+        return width;
     }
 
-    public void setWidth(int Width) {
-        this.Width = Width;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
     public int getHeight() {
-        return Height;
+        return height;
     }
 
-    public void setHeight(int Height) {
-        this.Height = Height;
+    public void setHeight(int height) {
+        this.height = height;
     }
     
     

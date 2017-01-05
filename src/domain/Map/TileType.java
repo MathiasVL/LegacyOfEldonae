@@ -13,12 +13,12 @@ public enum TileType {
     
     Grass("grass64", true), Dirt("dirt64", false), Water("water64", false), NULL("water64", false);
     
-    String TextureName;
-    boolean Buildable;
+    String textureName;
+    boolean buildable;
     
-    TileType(String TextureName, boolean Buildable)
+    TileType(String textureName, boolean buildable)
     {
-        this.TextureName = TextureName;
-        this.Buildable = Buildable;
+        this.textureName = textureName;
+        this.buildable = buildable;
     }
 }

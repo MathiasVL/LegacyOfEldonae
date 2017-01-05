@@ -14,22 +14,22 @@ import org.newdawn.slick.opengl.Texture;
  */
 public class Tile {
     
-    private float x, y, Width, Height;
-    private Texture Texture;
-    private TileType Type;
+    private float x, y, width, height;
+    private Texture texture;
+    private TileType type;
     
-    public Tile(float x, float y, float Width, float Height, TileType Type)
+    public Tile(float x, float y, float width, float height, TileType type)
     {
         this.x = x;
         this.y = y;
-        this.Width = Width;
-        this.Height = Height;
-        this.Type = Type;
-        this.Texture = QuickLoad(Type.TextureName);
+        this.width = width;
+        this.height = height;
+        this.type = type;
+        this.texture = quickLoad(type.textureName);
     }
     
-    public void Draw() {
-        DrawQuadTex(this.Texture, this.x, this.y, this.Width, this.Height);
+    public void draw() {
+        drawQuadTex(this.texture, this.x, this.y, this.width, this.height);
     }
 
     public float getX() {
@@ -37,7 +37,7 @@ public class Tile {
     }
     
     public int getXPlace() {
-        return (int) x / 64;
+        return (int) x / TILE_SIZE;
     }
 
     public float getY() {
@@ -45,23 +45,23 @@ public class Tile {
     }
     
     public int getYPlace() {
-        return (int) y / 64;
+        return (int) y / TILE_SIZE;
     }
 
     public float getWidth() {
-        return Width;
+        return width;
     }
 
     public float getHeight() {
-        return Height;
+        return height;
     }
 
     public Texture getTexture() {
-        return Texture;
+        return texture;
     }
 
     public TileType getType() {
-        return Type;
+        return type;
     }
 
     public void setX(float x) {
@@ -72,20 +72,20 @@ public class Tile {
         this.y = y;
     }
 
-    public void setWidth(float Width) {
-        this.Width = Width;
+    public void setWidth(float width) {
+        this.width = width;
     }
 
-    public void setHeight(float Height) {
-        this.Height = Height;
+    public void setHeight(float height) {
+        this.height = height;
     }
 
-    public void setTexture(Texture Texture) {
-        this.Texture = Texture;
+    public void setTexture(Texture texture) {
+        this.texture = texture;
     }
 
-    public void setType(TileType Type) {
-        this.Type = Type;
+    public void setType(TileType type) {
+        this.type = type;
     }
     
     

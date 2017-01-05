@@ -13,60 +13,60 @@ import org.lwjgl.Sys;
  */
 public class Clock {
     
-    private static boolean Paused = false;
-    public static long LastFrame, TotalTime;
-    public static float d=0, Multiplier = 1;
+    private static boolean paused = false;
+    public static long lastFrame, totalTime;
+    public static float d=0, multiplier = 1;
     
     public static long getTime() {
         return Sys.getTime() * 1000 / Sys.getTimerResolution();
     }
     
     public static float getDelta() {
-        long CurrentTime = getTime();
-        int Delta = (int) (CurrentTime - LastFrame);
-        LastFrame = getTime();
-        if(Delta * 0.001f > 0.05f)
+        long currentTime = getTime();
+        int delta = (int) (currentTime - lastFrame);
+        lastFrame = getTime();
+        if(delta * 0.001f > 0.05f)
             return 0.05f;
-        return Delta *0.001f;
+        return delta *0.001f;
     }
     
-    public static float Delta()
+    public static float delta()
     {
-        if(Paused)
+        if(paused)
             return 0;
         else
-            return d * Multiplier;        
+            return d * multiplier;        
     }
     
-    public static float TotalTime()
+    public static float totalTime()
     {
-        return TotalTime;
+        return totalTime;
     }
     
-    public static float Multiplier()
+    public static float multiplier()
     {
-        return Multiplier;
+        return multiplier;
     }
     
-    public static void Update(){
+    public static void update(){
         d = getDelta();
-        TotalTime += d;
+        totalTime += d;
     }
     
-    public static void ChangeMultiplier(float Change)
+    public static void changeMultiplier(float change)
     {
-        if(Multiplier + Change < -1 && Multiplier + Change > 7)
+        if(multiplier + change < -1 && multiplier + change > 7)
         {            
         }else {
-            Multiplier += Change;
+            multiplier += change;
         }
     }
     
-    public static void Pause()
+    public static void pause()
     {
-        if(Paused)
-            Paused = false;
+        if(paused)
+            paused = false;
         else
-            Paused = true;
+            paused = true;
     }
 }

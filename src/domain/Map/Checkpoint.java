@@ -11,18 +11,18 @@ package domain.Map;
  */
 public class Checkpoint {
     
-    private Tile Tile;
+    private Tile tile;
     private int xDirection, yDirection;
     
-    public Checkpoint(Tile Tile,int xDirection, int yDirection)
+    public Checkpoint(Tile tile,int xDirection, int yDirection)
     {
-        this.Tile = Tile;
+        this.tile = tile;
         this.xDirection = xDirection;
         this.yDirection = yDirection;
     }
 
     public Tile getTile() {
-        return Tile;
+        return tile;
     }
 
     public int getxDirection() {

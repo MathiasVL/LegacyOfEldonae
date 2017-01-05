@@ -20,34 +20,34 @@ import java.io.FileWriter;
  */
 public class Leveler {
     
-    public static void SaveMap(String MapName, Map MapGrid){
-        String MapData = "";
-        for(int i = 0; i < MapGrid.getTilesWide(); i++){
-            for(int j = 0; j < MapGrid.getTilesHigh(); j++) {
-                MapData += GetTileID(MapGrid.GetTile(i, j));
+    public static void saveMap(String mapName, Map mapGrid){
+        String mapData = "";
+        for(int i = 0; i < mapGrid.getTilesWide(); i++){
+            for(int j = 0; j < mapGrid.getTilesHigh(); j++) {
+                mapData += getTileID(mapGrid.getTile(i, j));
             }
         }
         
         try{
         File file = new File("MapName");
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-        bw.write(MapData);
+        bw.write(mapData);
         bw.close();
         }catch(Exception e){
             e.printStackTrace();
         }
     }
     
-    public static Map LoadMap(String MapName){
-        Map Map = new Map();
+    public static Map loadMap(String mapName){
+        Map map = new Map();
         
         try{
-            BufferedReader br = new BufferedReader(new FileReader(MapName));
+            BufferedReader br = new BufferedReader(new FileReader(mapName));
             String Data = br.readLine();
             
-            for(int i = 0; i<Map.getTilesWide(); i++){
-                for(int j = 0; j< Map.getTilesHigh(); j++){
-                    Map.setTile(i, j, GetTileType(Data.substring(i * Map.getTilesHigh() + j , i * Map.getTilesHigh() + j + 1)));
+            for(int i = 0; i<map.getTilesWide(); i++){
+                for(int j = 0; j< map.getTilesHigh(); j++){
+                    map.setTile(i, j, getTileType(Data.substring(i * map.getTilesHigh() + j , i * map.getTilesHigh() + j + 1)));
                 }
             }
         
@@ -55,34 +55,34 @@ public class Leveler {
             e.printStackTrace();
         }
                 
-        return Map;
+        return map;
     }
     
-    public static TileType GetTileType(String ID){
-        TileType Type = TileType.NULL;
+    public static TileType getTileType(String ID){
+        TileType type = TileType.NULL;
         
         switch(ID){
             case "0" : 
-                Type = TileType.Grass;
+                type = TileType.Grass;
                 break;                
             case "1" : 
-                Type = TileType.Dirt;
+                type = TileType.Dirt;
                 break;                
             case "2" : 
-                Type = TileType.Water;
+                type = TileType.Water;
                 break;                
             case "3" : 
-                Type = TileType.NULL;
+                type = TileType.NULL;
                 break;
         }
         
-        return Type;
+        return type;
     }
     
-    public static String GetTileID(Tile T){
+    public static String getTileID(Tile t){
         String ID = "E";
         
-        switch(T.getType()){
+        switch(t.getType()){
             case Grass:
                 ID="0";
                 break;

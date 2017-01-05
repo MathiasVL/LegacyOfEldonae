@@ -7,8 +7,8 @@ package domain.Tower;
 
 import domain.Characters.Enemy;
 import domain.Game;
-import static helpers.Clock.*;
 import static helpers.Artist.*;
+import static helpers.Clock.*;
 import org.newdawn.slick.opengl.Texture;
 
 /**
@@ -17,55 +17,55 @@ import org.newdawn.slick.opengl.Texture;
  */
 public class Projectile {
     
-    private Texture Texture;
-    private float x, y, Width, Height, Speed, xVelocity, yVelocity;
-    private int Damage;
-    private Enemy Target;
-    private boolean Alive;
+    private Texture texture;
+    private float x, y, width, height, speed, xVelocity, yVelocity;
+    private int damage;
+    private Enemy target;
+    private boolean alive;
     
-    public Projectile(Texture Texture, Enemy Target, float x, float y, float Width, float Height, float Speed, int Damage){
-        this.Texture = Texture;
+    public Projectile(Texture texture, Enemy target, float x, float y, float width, float height, float speed, int damage){
+        this.texture = texture;
         this.x = x;
         this.y = y;
-        this.Width = Width;
-        this.Height = Height;
-        this.Speed = Speed;
-        this.Damage = Damage;
-        this.Target = Target;
-        this.Alive = true;
+        this.width = width;
+        this.height = height;
+        this.speed = speed;
+        this.damage = damage;
+        this.target = target;
+        this.alive = true;
         this.xVelocity = 0f;
         this.yVelocity = 0f;
-        CalculateDirection();
+        calculateDirection();
     }
     
-    private void CalculateDirection() {
-        float TotalAllowedMovement = 1.0f;
-        float xDistanceFromTarget = Math.abs(Target.getX() - x - Game.TILE_SIZE/4 + Game.TILE_SIZE/2);
-        float yDistanceFromTarget = Math.abs(Target.getY() - y - Game.TILE_SIZE/4 + Game.TILE_SIZE/2);
-        float TotalDistanceFromTarget = xDistanceFromTarget + yDistanceFromTarget;
-        float xPercentofMovement = xDistanceFromTarget / TotalDistanceFromTarget;        
+    private void calculateDirection() {
+        float totalAllowedMovement = 1.0f;
+        float xDistanceFromTarget = Math.abs(target.getX() - x - TILE_SIZE/4 + TILE_SIZE/2);
+        float yDistanceFromTarget = Math.abs(target.getY() - y - TILE_SIZE/4 + TILE_SIZE/2);
+        float totalDistanceFromTarget = xDistanceFromTarget + yDistanceFromTarget;
+        float xPercentofMovement = xDistanceFromTarget / totalDistanceFromTarget;        
         xVelocity = xPercentofMovement;
-        yVelocity = TotalAllowedMovement - xPercentofMovement;
+        yVelocity = totalAllowedMovement - xPercentofMovement;
         
-        if(Target.getX() < x)
+        if(target.getX() < x)
             xVelocity *= -1;
-        if(Target.getY() < y)
+        if(target.getY() < y)
             yVelocity *= -1;
     }
     
-    public void Update() {
-        if(Alive){
-            x += xVelocity * Speed * Delta();
-            y += yVelocity * Speed * Delta();
-            if(CheckCollision(x, y, Width, Height, Target.getX(), Target.getY(), Target.getWidth(), Target.getHeight())){
-                Target.Damage(Damage);
-                Alive = false;
+    public void update() {
+        if(alive){
+            x += xVelocity * speed * delta();
+            y += yVelocity * speed * delta();
+            if(checkCollision(x, y, width, height, target.getX(), target.getY(), target.getWidth(), target.getHeight())){
+                target.damage(damage);
+                alive = false;
             }
-            Draw();
+            draw();
         }
     }
     
-    public void Draw() {
-        DrawQuadTex(Texture, x, y, 32, 32);
+    public void draw() {
+        drawQuadTex(texture, x, y, 32, 32);
     }
 }

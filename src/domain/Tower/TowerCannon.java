@@ -19,101 +19,101 @@ import org.newdawn.slick.opengl.Texture;
  */
 public class TowerCannon {
     
-    private float x,y, TimeSinceLastShot, FiringSpeed, Angle;
-    private int Width, Height, Damage, Range;
-    private Texture BaseTexture, CannonTexture;
-    private Tile StartTile;
-    private ArrayList<Projectile> Projectiles;
-    private ArrayList<Enemy> Enemies;
-    private Enemy Target;
-    private boolean Targeted;
+    private float x,y, timeSinceLastShot, firingSpeed, angle;
+    private int width, height, damage, range;
+    private Texture baseTexture, cannonTexture;
+    private Tile startTile;
+    private ArrayList<Projectile> projectiles;
+    private ArrayList<Enemy> enemies;
+    private Enemy target;
+    private boolean targeted;
     
-    public TowerCannon(Texture BaseTexture, Tile StartTile, int Damage, int Range, ArrayList<Enemy> Enemies) {
-        this.BaseTexture = BaseTexture;
-        this.CannonTexture = QuickLoad("cannonGun");
-        this.StartTile = StartTile;
-        this.x = StartTile.getX();
-        this.y = StartTile.getY();
-        this.Width = (int) StartTile.getWidth();
-        this.Height = (int) StartTile.getHeight();
-        this.Damage = Damage;
-        this.Range = Range;
-        this.FiringSpeed = 3;
-        this.TimeSinceLastShot = 0;
-        this.Projectiles = new ArrayList<>();
-        this.Enemies = Enemies;
-        this.Targeted = false;
+    public TowerCannon(Texture baseTexture, Tile startTile, int damage, int range, ArrayList<Enemy> enemies) {
+        this.baseTexture = baseTexture;
+        this.cannonTexture = quickLoad("cannonGun");
+        this.startTile = startTile;
+        this.x = startTile.getX();
+        this.y = startTile.getY();
+        this.width = (int) startTile.getWidth();
+        this.height = (int) startTile.getHeight();
+        this.damage = damage;
+        this.range = range;
+        this.firingSpeed = 3;
+        this.timeSinceLastShot = 0;
+        this.projectiles = new ArrayList<>();
+        this.enemies = enemies;
+        this.targeted = false;
         //this.Target = AcquireTarget();
         //this.Angle = CalculateAngle();
     }
     
-    private Enemy AcquireTarget() {
-        Enemy Closest = null;
+    private Enemy acquireTarget() {
+        Enemy closest = null;
         
-        float ClosestDistance = 10000;
-        for(Enemy e : Enemies){
-            if(IsInRange(e) && FindDistance(e) < ClosestDistance){
-                ClosestDistance = FindDistance(e);
-                Closest = e;
+        float closestDistance = 10000;
+        for(Enemy e : enemies){
+            if(isInRange(e) && findDistance(e) < closestDistance){
+                closestDistance = findDistance(e);
+                closest = e;
             }                
         }
-        if(Closest != null)
-            Targeted = true;
-        return  Closest;
+        if(closest != null)
+            targeted = true;
+        return  closest;
     }
     
-    private boolean IsInRange(Enemy e){
+    private boolean isInRange(Enemy e){
         float xDistance = Math.abs(e.getX() - x);
         float yDistance = Math.abs(e.getY() - y);
         
-        if(xDistance < Range && yDistance < Range)
+        if(xDistance < range && yDistance < range)
             return true;
         else
             return false;
     }
     
-    private float FindDistance(Enemy e){
+    private float findDistance(Enemy e){
         float xDistance = Math.abs(e.getX() - x);
         float yDistance = Math.abs(e.getY() - y);
         
         return xDistance + yDistance;
     }
     
-    private float CalculateAngle() {
-        double AngleTemp = Math.atan2(Target.getY() - y, Target.getX() - x);
+    private float calculateAngle() {
+        double AngleTemp = Math.atan2(target.getY() - y, target.getX() - x);
         return (float) Math.toDegrees(AngleTemp) - 90;
     }
     
-    private void Shoot() {
-        TimeSinceLastShot = 0;
-        Projectiles.add(new Projectile(QuickLoad("bullet"), Target, x + Game.TILE_SIZE/2 - (Game.TILE_SIZE/4) , y + Game.TILE_SIZE/2 - (Game.TILE_SIZE/4), Game.PROJECTILE_SIZE, Game.PROJECTILE_SIZE, 900, 10));
+    private void shoot() {
+        timeSinceLastShot = 0;
+        projectiles.add(new Projectile(quickLoad("bullet"), target, x + TILE_SIZE/2 - (TILE_SIZE/4) , y + TILE_SIZE/2 - (TILE_SIZE/4), PROJECTILE_SIZE, PROJECTILE_SIZE, 900, 10));
     }
     
-    public void UpdateEnemyList(ArrayList<Enemy> NewList){
-        Enemies = NewList;
+    public void updateEnemyList(ArrayList<Enemy> newList){
+        enemies = newList;
     }
     
-    public void Update() {
-        if(!Targeted){
-            Target = AcquireTarget();
+    public void update() {
+        if(!targeted){
+            target = acquireTarget();
         }
         
-        if(Target == null || Target.IsAlive() == false)
-            Targeted = false;
+        if(target == null || target.isAlive() == false)
+            targeted = false;
             
-        TimeSinceLastShot += Delta();
-        if(TimeSinceLastShot > FiringSpeed)
-            Shoot();
+        timeSinceLastShot += delta();
+        if(timeSinceLastShot > firingSpeed)
+            shoot();
         
-        for(Projectile P: Projectiles)
-            P.Update();
+        for(Projectile p: projectiles)
+            p.update();
         
-        Angle = CalculateAngle();
-        Draw();
+        angle = calculateAngle();
+        draw();
     }
     
-    public void Draw() {
-        DrawQuadTex(BaseTexture, x, y, Width, Height);
-        DrawQuadTexRot(CannonTexture, x, y, Width, Height, Angle);
+    public void draw() {
+        drawQuadTex(baseTexture, x, y, width, height);
+        drawQuadTexRot(cannonTexture, x, y, width, height, angle);
     }
 }
