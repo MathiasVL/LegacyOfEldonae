@@ -5,7 +5,9 @@
  */
 package domain.Tower;
 
-import org.newdawn.slick.opengl.Texture;
+import domain.Characters.Enemy;
+import domain.Map.Tile;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,7 +15,7 @@ import org.newdawn.slick.opengl.Texture;
  */
 public class TowerCannonBlue extends Tower {
     
-    public TowerCannonBlue(Texture texture, float x, float y, int width, int height) {
-        super(texture, x, y, width, height);
+    public TowerCannonBlue(TowerType type, Tile startTile, ArrayList<Enemy> enemies) {
+        super(type, startTile, enemies);
     }
 }
