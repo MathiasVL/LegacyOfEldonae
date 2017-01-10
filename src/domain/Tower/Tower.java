@@ -80,9 +80,9 @@ public abstract class Tower implements Entity{
         return (float) Math.toDegrees(angleTemp) - 90;
     }
     
-    private void shoot() {
+    public void shoot() {
         timeSinceLastShot = 0;
-        projectiles.add(new Projectile(quickLoad("bullet"), target, x + TILE_SIZE/2 - (TILE_SIZE/4) , y + TILE_SIZE/2 - (TILE_SIZE/4), PROJECTILE_SIZE, PROJECTILE_SIZE, 900, 10));
+        projectiles.add(new ProjectileIceBall(quickLoad("bullet"), target, x + TILE_SIZE/2 - (TILE_SIZE/4) , y + TILE_SIZE/2 - (TILE_SIZE/4), PROJECTILE_SIZE, PROJECTILE_SIZE, 900, 10));
     }
     
     public void updateEnemyList(ArrayList<Enemy> newList){
@@ -147,4 +147,7 @@ public abstract class Tower implements Entity{
         this.height = height;
     }
     
+    public Enemy getTarget(){
+        return target;
+    }
 }

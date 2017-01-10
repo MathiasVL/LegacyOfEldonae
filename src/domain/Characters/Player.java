@@ -9,6 +9,7 @@ import domain.Map.*;
 import domain.Tower.Tower;
 import domain.Tower.TowerCannon;
 import domain.Tower.TowerCannonBlue;
+import domain.Tower.TowerIce;
 import domain.Tower.TowerType;
 import org.lwjgl.input.Mouse;
 
@@ -60,7 +61,7 @@ public class Player {
         
         //right
         if(Mouse.isButtonDown(1) && !rightMouseButtonDown){            
-            towerList.add(new TowerCannonBlue(TowerType.CannonRed, map.getTile((Mouse.getX() / TILE_SIZE), (((HEIGHT - Mouse.getY() - 1 )) / TILE_SIZE) - 1), waveManager.getCurrentWave().getEnemyList()));
+            towerList.add(new TowerIce(TowerType.CannonIce, map.getTile((Mouse.getX() / TILE_SIZE), (((HEIGHT - Mouse.getY() - 1 )) / TILE_SIZE) - 1), waveManager.getCurrentWave().getEnemyList()));
         }
         
         rightMouseButtonDown = Mouse.isButtonDown(1);

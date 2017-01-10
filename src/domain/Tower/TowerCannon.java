@@ -85,7 +85,7 @@ public class TowerCannon {
     
     private void shoot() {
         timeSinceLastShot = 0;
-        projectiles.add(new Projectile(quickLoad("bullet"), target, x + TILE_SIZE/2 - (TILE_SIZE/4) , y + TILE_SIZE/2 - (TILE_SIZE/4), PROJECTILE_SIZE, PROJECTILE_SIZE, 900, 10));
+        projectiles.add(new ProjectileIceBall(quickLoad("bullet"), target, x + TILE_SIZE/2 - (TILE_SIZE/4) , y + TILE_SIZE/2 - (TILE_SIZE/4), PROJECTILE_SIZE, PROJECTILE_SIZE, 900, 10));
     }
     
     public void updateEnemyList(ArrayList<Enemy> newList){
