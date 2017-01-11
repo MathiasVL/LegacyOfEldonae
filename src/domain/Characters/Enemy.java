@@ -10,7 +10,6 @@ import domain.Map.Checkpoint;
 import domain.Map.Map;
 import static helpers.Artist.*;
 import static helpers.Clock.*;
-
 import domain.Map.Tile;
 import java.util.ArrayList;
 import org.newdawn.slick.opengl.Texture;
@@ -24,7 +23,7 @@ public class Enemy implements Entity {
     private float speed, x, y, health, startHealth;
     private Texture texture, healthBackground, healthForeground, healthBorder;
     private Tile startTile;
-    private boolean first = true, alive = true;
+    private boolean first, alive;
     private Map map;
     
     private ArrayList<Checkpoint> checkpoints;
@@ -45,34 +44,43 @@ public class Enemy implements Entity {
         this.health = health;
         this.startHealth = health;
         this.map = map;
-        
+        this.first = true;
+        this.alive = true;
         this.checkpoints = new ArrayList<Checkpoint>();
         this.directions = new int[2];
         //X direction
         this.directions[0] = 0;
         //Y direction
         this.directions[1] = 0;
-        directions = findNextD(startTile);        
+        this.directions = findNextD(startTile);        
         this.currentCheckpoint = 0;
         populateCheckPointList();
     }
     
-    public void update()
-    {
+    public void update() {
+        //check if it is the first time this class is updated, if so do nothing
         if(first)
             first = false;
         else {
             if(checkpointReached())
             {
+                //check if there are more checkpoints before moving on
                 if(currentCheckpoint + 1 == checkpoints.size())
-                    die();
+                    endMazeReached();
                 else
                     currentCheckpoint++;
             }else {
+                //if not at a checkpoint, continue in current direction
                 x += delta() * checkpoints.get(currentCheckpoint).getxDirection() * speed;
                 y += delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed;
             }
         }           
+    }
+    
+    //run when last checkpoint is reached by enemy
+    private void endMazeReached() {
+        Player.modifyLive(-1);
+        die();
     }
     
     private boolean checkpointReached() {
@@ -90,6 +98,7 @@ public class Enemy implements Entity {
     }
     
     private void populateCheckPointList() {
+        //add fist checkpoint manually based on starttile
         checkpoints.add(findNextC(startTile, directions = findNextD(startTile)));
         
         int counter = 0;
@@ -145,6 +154,7 @@ public class Enemy implements Entity {
         Tile r = map.getTile(s.getXPlace()+1, s.getYPlace());
         Tile l = map.getTile(s.getXPlace()-1, s.getYPlace());
         
+        //check if current inhabited tiletype matches tiletype above, right, down or left
         if(s.getType() == u.getType() && directions[1] != 1)
         {
             dir[0] = 0;
@@ -173,10 +183,13 @@ public class Enemy implements Entity {
         return dir;
     }
     
+    //take damage from external source
     public void damage(int Amount) {
         health -= Amount;
-        if(health <= 0)
+        if(health <= 0){
             die();
+            Player.modifyCash(5);
+        }
     }
     
     private void die()
@@ -184,23 +197,12 @@ public class Enemy implements Entity {
         alive = false;
     }
     
-    /*
-    public boolean PathContinues() {
-        boolean Answer = true;
-        
-        Tile MyTile = Map.GetTile((int) (x / 64) , (int) (y / 64));
-        Tile NextTile = Map.GetTile((int) (x / 64) +1 , (int) (y / 64));
-        
-        if(MyTile.getType() != NextTile.getType())
-            Answer = false;
-        
-        return Answer;
-    }
-    */
     public void draw()
     {
         float healthPercentage = health / startHealth;
+        //enemy texture
         drawQuadTex(texture, x, y, width, height);
+        //health bar textures
         drawQuadTex(healthBackground, x, y - 16, width, 8);
         drawQuadTex(healthForeground, x, y - 16, TILE_SIZE * healthPercentage, 8);
         drawQuadTex(healthBorder, x, y - 16, width, 8);

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain.Tower;
+package domain.Projectiles;
 
 import domain.Characters.Enemy;
 import domain.Entity;
@@ -24,14 +24,14 @@ public abstract class Projectile implements Entity {
     private Enemy target;
     private boolean alive;
     
-    public Projectile(Texture texture, Enemy target, float x, float y, int width, int height, float speed, int damage){
-        this.texture = texture;
+    public Projectile(ProjectileType projectileType, Enemy target, float x, float y, int width, int height){
+        this.texture = projectileType.texture;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.speed = speed;
-        this.damage = damage;
+        this.speed = projectileType.speed;
+        this.damage = projectileType.damage;
         this.target = target;
         this.alive = true;
         this.xVelocity = 0f;
@@ -48,12 +48,14 @@ public abstract class Projectile implements Entity {
         xVelocity = xPercentofMovement;
         yVelocity = totalAllowedMovement - xPercentofMovement;
         
+        //set direction based on position of target relative to tower
         if(target.getX() < x)
             xVelocity *= -1;
         if(target.getY() < y)
             yVelocity *= -1;
     }
     
+    //deal damage to enemy
     public void doDamage() {
         target.damage(damage);
         alive = false;

@@ -6,11 +6,10 @@
 package domain.Characters;
 
 import domain.Map.*;
-import domain.Tower.Tower;
-import domain.Tower.TowerCannon;
-import domain.Tower.TowerCannonBlue;
-import domain.Tower.TowerIce;
-import domain.Tower.TowerType;
+import domain.Towers.Tower;
+import domain.Towers.TowerCannonBlue;
+import domain.Towers.TowerIce;
+import domain.Towers.TowerType;
 import org.lwjgl.input.Mouse;
 
 import static helpers.Artist.*;
@@ -29,6 +28,7 @@ public class Player {
     private WaveManager waveManager;
     private ArrayList<Tower> towerList;
     private boolean leftMouseButtonDown, rightMouseButtonDown;
+    public static int cash, lives;
     
     public Player(Map map, WaveManager waveManager) {
         this.map = map;
@@ -41,10 +41,31 @@ public class Player {
         this.towerList = new ArrayList<Tower>();
         this.leftMouseButtonDown = false;
         this.rightMouseButtonDown = false;
+        cash = 0;
+        lives = 0;
     }  
+    
+    //initialize cash and live values for player
+    public void setup() {
+        cash = 50;
+        lives = 10;
+    }
+    
+    public static boolean modifyCash(int amount) {
+        if( cash + amount >= 0) {
+            cash += amount;
+            return true;
+        }
+        return false;
+    }
+    
+    public static void modifyLive(int amount){
+        lives += amount;
+    }
         
     public void update() {
         
+        //update all towers in the game
         for(Tower t : towerList){
             t.update();
             //t.draw();
@@ -53,15 +74,17 @@ public class Player {
         
         //Handle Mouse Input
         //Left
-        if(Mouse.isButtonDown(0) && !leftMouseButtonDown){            
-            towerList.add(new TowerCannonBlue(TowerType.CannonBlue, map.getTile((Mouse.getX() / TILE_SIZE), (((HEIGHT - Mouse.getY() - 1 )) / TILE_SIZE) - 1), waveManager.getCurrentWave().getEnemyList()));
+        if(Mouse.isButtonDown(0) && !leftMouseButtonDown){     
+            if(modifyCash(-20))
+                towerList.add(new TowerCannonBlue(TowerType.CannonBlue, map.getTile((Mouse.getX() / TILE_SIZE), (((HEIGHT - Mouse.getY() - 1 )) / TILE_SIZE) - 1), waveManager.getCurrentWave().getEnemyList()));
         }
         
         leftMouseButtonDown = Mouse.isButtonDown(0);
         
         //right
-        if(Mouse.isButtonDown(1) && !rightMouseButtonDown){            
-            towerList.add(new TowerIce(TowerType.CannonIce, map.getTile((Mouse.getX() / TILE_SIZE), (((HEIGHT - Mouse.getY() - 1 )) / TILE_SIZE) - 1), waveManager.getCurrentWave().getEnemyList()));
+        if(Mouse.isButtonDown(1) && !rightMouseButtonDown){   
+            if(modifyCash(-55))
+                towerList.add(new TowerIce(TowerType.CannonIce, map.getTile((Mouse.getX() / TILE_SIZE), (((HEIGHT - Mouse.getY() - 1 )) / TILE_SIZE) - 1), waveManager.getCurrentWave().getEnemyList()));
         }
         
         rightMouseButtonDown = Mouse.isButtonDown(1);

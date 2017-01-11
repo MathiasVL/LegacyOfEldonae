@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain.Tower;
+package domain.Towers;
 
+import domain.Projectiles.Projectile;
 import domain.Characters.Enemy;
 import domain.Entity;
 import domain.Map.Tile;
 import static helpers.Artist.*;
 import static helpers.Clock.delta;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.newdawn.slick.opengl.Texture;
 
 /**
@@ -21,13 +23,15 @@ public abstract class Tower implements Entity{
 
     private float x, y, timeSinceLastShot, firingSpeed, angle;
     private int width, height, damage, range;
-    private Enemy target;
+    public Enemy target;
     private Texture[] textures;
-    private ArrayList<Enemy> enemies;
+    private CopyOnWriteArrayList<Enemy> enemies;
     private boolean targeted;
-    private ArrayList<Projectile> projectiles;
+    public ArrayList<Projectile> projectiles;
+    public TowerType type;
     
-    public Tower(TowerType type, Tile startTile, ArrayList<Enemy> enemies) {
+    public Tower(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies) {
+        this.type = type;
         this.textures = type.textures;
         this.damage = type.damage;
         this.range = type.range;
@@ -46,13 +50,18 @@ public abstract class Tower implements Entity{
     private Enemy acquireTarget() {
         Enemy closest = null;
         
+        //arbitrary distance (larger then map), to help with sorting enemy distances
         float closestDistance = 10000;
+        
+        //go trough each enemy in enemies and return nearest one
         for(Enemy e : enemies){
-            if(isInRange(e) && findDistance(e) < closestDistance){
+            if(isInRange(e) && findDistance(e) < closestDistance && e.isAlive()){
                 closestDistance = findDistance(e);
                 closest = e;
             }                
         }
+        
+        //if enemy exists and is returned, targeted is true
         if(closest != null)
             targeted = true;
         return  closest;
@@ -80,31 +89,32 @@ public abstract class Tower implements Entity{
         return (float) Math.toDegrees(angleTemp) - 90;
     }
     
-    public void shoot() {
-        timeSinceLastShot = 0;
-        projectiles.add(new ProjectileIceBall(quickLoad("bullet"), target, x + TILE_SIZE/2 - (TILE_SIZE/4) , y + TILE_SIZE/2 - (TILE_SIZE/4), PROJECTILE_SIZE, PROJECTILE_SIZE, 900, 10));
-    }
+    //abstract method for 'shoot', must be overriden in subclass
+    public abstract void shoot(Enemy target);
     
-    public void updateEnemyList(ArrayList<Enemy> newList){
+    public void updateEnemyList(CopyOnWriteArrayList<Enemy> newList){
         enemies = newList;
     }
     
     public void update() {
         if(!targeted){
             target = acquireTarget();
+        } else {
+            angle = calculateAngle();
+            if(timeSinceLastShot > firingSpeed) {
+                shoot(target); 
+                timeSinceLastShot = 0;
+            }
         }
         
         if(target == null || target.isAlive() == false)
             targeted = false;
             
         timeSinceLastShot += delta();
-        if(timeSinceLastShot > firingSpeed)
-            shoot();
         
         for(Projectile p: projectiles)
             p.update();
         
-        angle = calculateAngle();
         draw();
     }
 

@@ -20,7 +20,7 @@ public class Map {
     {     
         this.tilesWide = 20;
         this.tilesHigh = 15;
-        map = new Tile[20][15];
+        map = new Tile[tilesWide][tilesHigh];
         for(int i = 0; i<map.length; i++)
         {
             for(int j = 0; j<map[i].length; j++)

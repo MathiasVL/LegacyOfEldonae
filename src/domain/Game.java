@@ -7,7 +7,7 @@ package domain;
 
 import domain.Characters.*;
 import domain.Map.*;
-import domain.Tower.TowerCannonBlue;
+import domain.Towers.TowerCannonBlue;
 import static helpers.Artist.*;
 
 /**
@@ -24,6 +24,7 @@ public class Game {
         this.map = new Map(map);
         this.waveManager = new WaveManager(new Enemy(quickLoad("ufo64"), this.map.getTile(14, 8), this.map, TILE_SIZE, TILE_SIZE, 70, 25), 2, 2);
         this.player = new Player(this.map, waveManager);
+        this.player.setup();
     }
     
     public void update() {

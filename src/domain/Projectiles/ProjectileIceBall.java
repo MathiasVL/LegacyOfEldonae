@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain.Tower;
+package domain.Projectiles;
 
 import domain.Characters.Enemy;
-import org.newdawn.slick.opengl.Texture;
 
 /**
  *
@@ -14,8 +13,8 @@ import org.newdawn.slick.opengl.Texture;
  */
 public class ProjectileIceBall extends Projectile {
     
-    public ProjectileIceBall(Texture texture, Enemy target, float x, float y, int width, int height, float speed, int damage) {
-        super(texture, target, x, y, width, height, speed, damage);
+    public ProjectileIceBall(ProjectileType projectileType, Enemy target, float x, float y, int width, int height) {
+        super(projectileType, target, x, y, width, height);
     }
     
     @Override

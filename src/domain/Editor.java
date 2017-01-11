@@ -23,12 +23,12 @@ public class Editor {
     private TileType[] types;
     
     public Editor(){
-        this.map = loadMap("MapName");//new Map();
+        this.map = loadMap("MapName");
+        this.index = 0;
         this.types = new TileType[3];
         this.types[0] = TileType.Grass;
         this.types[1] = TileType.Dirt;
         this.types[2] = TileType.Water;
-        this.index = 0;
     }
     
     public void update(){
@@ -55,6 +55,7 @@ public class Editor {
         map.setTile((int)Math.floor(Mouse.getX() / TILE_SIZE), (int) Math.floor(((HEIGHT - Mouse.getY() - 1 )) / TILE_SIZE) - 1, types[index]);
     }
         
+    //allows editor to change which tiletype is selected
     private void moveIndex()
     {
         index++;

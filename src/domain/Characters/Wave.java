@@ -6,8 +6,8 @@
 package domain.Characters;
 
 import static helpers.Artist.TILE_SIZE;
-import java.util.ArrayList;
 import static helpers.Clock.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 /**
  *
  * @author mathi
@@ -16,8 +16,8 @@ public class Wave {
     
     private float timeSinceLastSpawn, spawnTime;
     private Enemy enemyType;
-    private ArrayList<Enemy> enemyList;
-    private int enemiesPerWave;
+    private CopyOnWriteArrayList<Enemy> enemyList;
+    private int enemiesPerWave, enemiesSpawned;
     private boolean waveCompleted;
     
     public Wave(Enemy enemyType, float spawnTime, int enemiesPerWave)
@@ -25,8 +25,9 @@ public class Wave {
         this.enemyType = enemyType;
         this.spawnTime = spawnTime;
         this.enemiesPerWave = enemiesPerWave;
+        this.enemiesSpawned = 0;
         this.timeSinceLastSpawn = 0;
-        this.enemyList = new ArrayList<Enemy>();
+        this.enemyList = new CopyOnWriteArrayList<Enemy>();
         this.waveCompleted = false;
         
         spawn();
@@ -34,8 +35,9 @@ public class Wave {
     
     public void update()
     {
+        //assume all enemies are dead until for loop finds one that is alive
         boolean allEnemiesDead = true;
-        if(enemyList.size() < enemiesPerWave) {
+        if(enemiesSpawned < enemiesPerWave) {
             timeSinceLastSpawn += delta();
             if(timeSinceLastSpawn > spawnTime) {
                 spawn();
@@ -50,6 +52,9 @@ public class Wave {
                 e.update();
                 e.draw();
             }
+            else {
+                enemyList.remove(e);
+            }
         }
         
         if(allEnemiesDead)
@@ -58,6 +63,7 @@ public class Wave {
     
     private void spawn() {
         enemyList.add(new Enemy(enemyType.getTexture(), enemyType.getStartTile(), enemyType.getMap(), TILE_SIZE, TILE_SIZE, enemyType.getSpeed(), enemyType.getHealth()));
+        enemiesSpawned++;
         
     }
     
@@ -65,7 +71,7 @@ public class Wave {
         return waveCompleted;
     }
     
-    public ArrayList<Enemy> getEnemyList() {
+    public CopyOnWriteArrayList<Enemy> getEnemyList() {
         return enemyList;
     }
 }
