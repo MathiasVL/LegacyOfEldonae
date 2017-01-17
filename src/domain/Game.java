@@ -7,8 +7,15 @@ package domain;
 
 import domain.Characters.*;
 import domain.Map.*;
+import domain.Towers.TowerCannon;
 import domain.Towers.TowerCannonBlue;
+import domain.Towers.TowerType;
 import static helpers.Artist.*;
+import static helpers.Artist.drawQuadTex;
+import org.lwjgl.input.Mouse;
+import ui.Button;
+import ui.UI;
+import ui.UI.Menu;
 
 /**
  *
@@ -19,17 +26,47 @@ public class Game {
     private Map map;
     private Player player;
     private WaveManager waveManager;
+    private UI gameUI;
+    private Menu towerPickerMenu;
     
-    public Game(int[][] map) {
-        this.map = new Map(map);
-        this.waveManager = new WaveManager(new Enemy(quickLoad("ufo64"), this.map.getTile(14, 8), this.map, TILE_SIZE, TILE_SIZE, 70, 25), 2, 2);
+    public Game(Map map) {
+        this.map = map;
+        this.waveManager = new WaveManager(new Enemy(quickLoad("ufo64"), this.map.getTile(2, 0), this.map, TILE_SIZE, TILE_SIZE, 70, 25), 2, 2);
         this.player = new Player(this.map, waveManager);
         this.player.setup();
+        setupUI();
+    }
+    
+    private void setupUI(){
+        this.gameUI = new UI();
+        //this.towerPickerUI.addButton("CannonBlue", "cannonBlueGun", 0, 0);
+        //this.towerPickerUI.addButton("CannonRed", "cannonGun", TILE_SIZE, 0);
+        gameUI.createMenu("TowerPicker", TILE_SIZE * map.getTilesWide(), 100, TILE_SIZE * 3, TILE_SIZE * map.getTilesHigh(), 2, 0);
+        towerPickerMenu = gameUI.getMenu("TowerPicker");
+        towerPickerMenu.quickAdd("CannonBlue", "cannonBlueGun");
+        towerPickerMenu.quickAdd("CannonRed", "cannonGun");
+        //towerPickerMenu.addButton(new Button("CannonRed", quickLoad("cannonGun"), 0, 0));
+    }
+    
+    private void updateUI(){
+        gameUI.draw();
+        
+        if(Mouse.next()){
+            boolean mouseClicked = Mouse.isButtonDown(0);
+            if(mouseClicked){
+                if(towerPickerMenu.isButtonClicked("CannonBlue"))
+                    player.pickTower(new TowerCannonBlue(TowerType.CannonBlue, map.getTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
+                if(towerPickerMenu.isButtonClicked("CannonRed"))
+                    player.pickTower(new TowerCannon(TowerType.CannonRed, map.getTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
+            }
+        }
     }
     
     public void update() {
+        drawQuadTex(quickLoad("menuBackground2"), TILE_SIZE*map.getTilesWide(), 0, TILE_SIZE*3, TILE_SIZE*map.getTilesHigh());
         map.draw();  
         waveManager.update();
         player.update();
+        updateUI();
     }
 }
