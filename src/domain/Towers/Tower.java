@@ -56,7 +56,7 @@ public abstract class Tower implements Entity{
         
         //go trough each enemy in enemies and return nearest one
         for(Enemy e : enemies){
-            if(isInRange(e) && findDistance(e) < closestDistance && e.isAlive()){
+            if(isInRange(e) && findDistance(e) < closestDistance && e.getHiddenHealth() > 0){
                 closestDistance = findDistance(e);
                 closest = e;
             }                
@@ -98,7 +98,7 @@ public abstract class Tower implements Entity{
     }
     
     public void update() {
-        if(!targeted){
+        if(!targeted || target.getHiddenHealth() < 0){
             target = acquireTarget();
         } else {
             angle = calculateAngle();

@@ -20,7 +20,7 @@ import org.newdawn.slick.opengl.Texture;
  */
 public class Enemy implements Entity {
     private int width, height, currentCheckpoint;
-    private float speed, x, y, health, startHealth;
+    private float speed, x, y, health, startHealth, hiddenHealth;
     private Texture texture, healthBackground, healthForeground, healthBorder;
     private Tile startTile;
     private boolean first, alive;
@@ -43,6 +43,7 @@ public class Enemy implements Entity {
         this.speed = speed;
         this.health = health;
         this.startHealth = health;
+        this.hiddenHealth = health;
         this.map = map;
         this.first = true;
         this.alive = true;
@@ -207,7 +208,15 @@ public class Enemy implements Entity {
         drawQuadTex(healthForeground, x, y - 16, TILE_SIZE * healthPercentage, 8);
         drawQuadTex(healthBorder, x, y - 16, width, 8);
     }
+    
+    public void reduceHiddenHealth(float amount){
+        hiddenHealth -= amount;
+    }
 
+    public float getHiddenHealth(){
+        return hiddenHealth;
+    }
+    
     public void setWidth(int width) {
         this.width = width;
     }

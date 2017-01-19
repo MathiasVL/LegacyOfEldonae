@@ -7,13 +7,11 @@ package domain;
 
 import domain.Map.Map;
 import domain.Map.TileType;
-import domain.Towers.TowerCannon;
-import domain.Towers.TowerCannonBlue;
-import domain.Towers.TowerType;
 import static helpers.Artist.*;
 import static helpers.Leveler.*;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.opengl.Texture;
 import ui.UI;
 import ui.UI.Menu;
 
@@ -28,6 +26,7 @@ public class Editor {
     private TileType[] types;
     private UI editorUI;
     private Menu tilePickerMenu;
+    private Texture menuBackground;
     
     public Editor(){
         this.map = loadMap("MapName");
@@ -36,6 +35,7 @@ public class Editor {
         this.types[0] = TileType.Grass;
         this.types[1] = TileType.Dirt;
         this.types[2] = TileType.Water;
+        this.menuBackground = quickLoad("menuBackground");
         setupUI();
     }
     
@@ -80,7 +80,7 @@ public class Editor {
     }
     
     private void draw(){
-        drawQuadTex(quickLoad("menuBackground"), TILE_SIZE*map.getTilesWide(), 0, TILE_SIZE*3, TILE_SIZE*map.getTilesHigh());
+        drawQuadTex(menuBackground, TILE_SIZE*map.getTilesWide(), 0, TILE_SIZE*3, TILE_SIZE*map.getTilesHigh());
         map.draw();
         editorUI.draw();
     }
@@ -90,8 +90,7 @@ public class Editor {
     }
         
     //allows editor to change which tiletype is selected
-    private void moveIndex()
-    {
+    private void moveIndex() {
         index++;
         if(index > types.length -1)
         {

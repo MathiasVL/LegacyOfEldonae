@@ -54,6 +54,7 @@ public class Player {
         lives = 10;
     }
     
+    //check if player can afford tower, if so process transaction
     public static boolean modifyCash(int amount) {
         if( cash + amount >= 0) {
             cash += amount;
@@ -111,11 +112,15 @@ public class Player {
     }
     
     private void placeTower(){
+        Tile currentTile = getMouseTile();
+        
         if(holdingTower)
-            if(modifyCash(-tempTower.getCost()))
+            if(!currentTile.getOccupied() && modifyCash(-tempTower.getCost())){
                 towerList.add(tempTower);
-        holdingTower = false;
-        tempTower = null;
+                currentTile.setOccupied(true);
+                holdingTower = false;
+                tempTower = null;
+            }
     }
     
     public void pickTower(Tower t){

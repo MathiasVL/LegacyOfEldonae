@@ -18,7 +18,7 @@ public enum ProjectileType {
     IceBall(quickLoad("iceBall"), 6, 450);
     
     Texture texture;
-    int damage;
+    public int damage;
     float speed;
     
     ProjectileType(Texture texture, int damage, float speed){

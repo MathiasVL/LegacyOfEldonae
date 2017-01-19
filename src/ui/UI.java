@@ -6,8 +6,10 @@
 package ui;
 
 import static helpers.Artist.*;
+import java.awt.Font;
 import java.util.ArrayList;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.TrueTypeFont;
 
 /**
  *
@@ -17,10 +19,18 @@ public class UI {
     
     private ArrayList<Button> buttonList;
     private ArrayList<Menu> menuList;
+    private TrueTypeFont font;
+    private Font awtFont;
     
     public UI() {
         this.buttonList = new ArrayList<Button>();
         this.menuList = new ArrayList<Menu>();
+        this.awtFont = new Font("Times New Roman", Font.BOLD, 24);
+        this.font = new TrueTypeFont(awtFont, false);
+    }
+    
+    public void drawString(int x, int y, String text){
+        font.drawString(x, y, text);
     }
     
     public void addButton(String Name, String TextureName, int x, int y){
