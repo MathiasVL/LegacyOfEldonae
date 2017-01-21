@@ -29,6 +29,35 @@ public class Enemy implements Entity {
     private ArrayList<Checkpoint> checkpoints;
     private int[] directions;
     
+    //Default constructer
+    public Enemy(int tileX, int tileY, Map map){
+        this.texture = quickLoad("ufo64");
+        this.healthBackground = quickLoad("healthBackground");
+        this.healthForeground = quickLoad("healthForeground");
+        this.healthBorder = quickLoad("healthBorder");
+        this.startTile = map.getTile(tileX, tileY);
+        this.x = startTile.getX();
+        this.y = startTile.getY();
+        this.width = TILE_SIZE;
+        this.height = TILE_SIZE;
+        this.speed = 50;
+        this.health = 50;
+        this.startHealth = health;
+        this.hiddenHealth = health;
+        this.map = map;
+        this.first = true;
+        this.alive = true;
+        this.checkpoints = new ArrayList<Checkpoint>();
+        this.directions = new int[2];
+        //X direction
+        this.directions[0] = 0;
+        //Y direction
+        this.directions[1] = 0;
+        this.directions = findNextD(startTile);        
+        this.currentCheckpoint = 0;
+        populateCheckPointList();
+    }
+    
     public Enemy(Texture texture, Tile startTile, Map map, int width, int height, float speed, float health)
     {
         this.texture = texture;
@@ -245,6 +274,10 @@ public class Enemy implements Entity {
         this.texture = texture;
     }
 
+    public void setTexture(String texture) {
+        this.texture = quickLoad(texture);
+    }
+    
     public void setStartTile(Tile startTile) {
         this.startTile = startTile;
     }

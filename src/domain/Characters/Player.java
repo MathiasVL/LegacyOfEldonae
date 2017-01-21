@@ -7,9 +7,6 @@ package domain.Characters;
 
 import domain.Map.*;
 import domain.Towers.Tower;
-import domain.Towers.TowerCannonBlue;
-import domain.Towers.TowerCannonIce;
-import domain.Towers.TowerType;
 import org.lwjgl.input.Mouse;
 
 import static helpers.Artist.*;

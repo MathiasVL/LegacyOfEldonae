@@ -86,7 +86,11 @@ public class Editor {
     }
     
     private void setTile() {
-        map.setTile((int)Math.floor(Mouse.getX() / TILE_SIZE), (int) Math.floor(((HEIGHT - Mouse.getY())) / TILE_SIZE), types[index]);
+        int x = (int)(Math.floor(Mouse.getX() / TILE_SIZE));
+        int y = (int)(Math.floor(((HEIGHT - Mouse.getY())) / TILE_SIZE)); 
+        
+        if((x > 0 && x < map.getTilesWide()) && (y > 0 && y < map.getTilesHigh()))
+            map.setTile(x, y, types[index]);
     }
         
     //allows editor to change which tiletype is selected

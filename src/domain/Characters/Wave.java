@@ -7,6 +7,7 @@ package domain.Characters;
 
 import static helpers.Artist.TILE_SIZE;
 import static helpers.Clock.*;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 /**
  *
@@ -15,14 +16,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Wave {
     
     private float timeSinceLastSpawn, spawnTime;
-    private Enemy enemyType;
+    private Enemy[] enemyTypes;
     private CopyOnWriteArrayList<Enemy> enemyList;
     private int enemiesPerWave, enemiesSpawned;
     private boolean waveCompleted;
     
-    public Wave(Enemy enemyType, float spawnTime, int enemiesPerWave)
+    public Wave(Enemy[] enemyTypes, float spawnTime, int enemiesPerWave)
     {
-        this.enemyType = enemyType;
+        this.enemyTypes = enemyTypes;
         this.spawnTime = spawnTime;
         this.enemiesPerWave = enemiesPerWave;
         this.enemiesSpawned = 0;
@@ -62,7 +63,11 @@ public class Wave {
     }
     
     private void spawn() {
-        enemyList.add(new Enemy(enemyType.getTexture(), enemyType.getStartTile(), enemyType.getMap(), TILE_SIZE, TILE_SIZE, enemyType.getSpeed(), enemyType.getHealth()));
+        int enemyChosen = 0;
+        Random random = new Random();
+        enemyChosen = random.nextInt(enemyTypes.length);
+        
+        enemyList.add(new Enemy(enemyTypes[enemyChosen].getTexture(), enemyTypes[enemyChosen].getStartTile(), enemyTypes[enemyChosen].getMap(), TILE_SIZE, TILE_SIZE, enemyTypes[enemyChosen].getSpeed(), enemyTypes[enemyChosen].getHealth()));
         enemiesSpawned++;
         
     }

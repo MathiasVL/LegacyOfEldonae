@@ -30,10 +30,14 @@ public class Game {
     private UI gameUI;
     private Menu towerPickerMenu;
     private Texture menuBackground;
+    private Enemy[] enemyTypes;
     
     public Game(Map map) {
         this.map = map;
-        this.waveManager = new WaveManager(new Enemy(quickLoad("ufo64"), this.map.getTile(2, 0), this.map, TILE_SIZE, TILE_SIZE, 70, 25), 2, 2);
+        this.enemyTypes = new Enemy[2];
+        this.enemyTypes[0] = new EnemyAlien(2, 1, map);
+        this.enemyTypes[1] = new EnemyUFO(2, 1, map);
+        this.waveManager = new WaveManager(enemyTypes, 3, 3);
         this.player = new Player(this.map, waveManager);
         this.player.setup();
         this.menuBackground = quickLoad("menuBackground2");
